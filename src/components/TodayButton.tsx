@@ -29,19 +29,6 @@ export function TodayButton({ trip }: TodayButtonProps) {
     }
   };
 
-  const getButtonStyle = () => {
-    switch (dateStatus.status) {
-      case 'active':
-        return 'from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700';
-      case 'upcoming':
-        return 'from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700';
-      case 'completed':
-        return 'from-gray-500 to-slate-600 hover:from-gray-600 hover:to-slate-700';
-      default:
-        return 'from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700';
-    }
-  };
-
   const buttonColor = 
     dateStatus.status === 'active' ? 'bg-white/[0.08] hover:bg-white/[0.12] border-white/[0.15]' :
     dateStatus.status === 'upcoming' ? 'bg-white/[0.08] hover:bg-white/[0.12] border-white/[0.15]' :
