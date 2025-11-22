@@ -1,6 +1,7 @@
 /* Import all styles in order */
 @import './styles/typography.css';
 @import './styles/animations.css';
+@import './styles/swipe-animations.css';
 @import './styles/mobile-optimizations.css';
 @import './styles/background.css';
 @import './styles/mexico-theme.css';

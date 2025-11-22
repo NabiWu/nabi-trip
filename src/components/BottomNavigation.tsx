@@ -3,6 +3,7 @@ import { getAllTrips } from '../data/trips';
 import { getTripStatus } from '../utils/dateUtils';
 import { classNames } from '../utils/classNames';
 import { typography, ui } from '../constants';
+import { HomeIcon, CalendarIcon, SparklesIcon } from './icons';
 
 export function BottomNavigation() {
   const location = useLocation();
@@ -21,7 +22,7 @@ export function BottomNavigation() {
     {
       path: '/',
       label: '主页',
-      icon: '🏠',
+      icon: <HomeIcon className="w-6 h-6" />,
       active: location.pathname === '/',
     },
     ...(activeTrip && currentDay
@@ -29,13 +30,13 @@ export function BottomNavigation() {
           {
             path: `/trips/${activeTrip.id}`,
             label: '行程',
-            icon: '📅',
+            icon: <CalendarIcon className="w-6 h-6" />,
             active: location.pathname.startsWith(`/trips/${activeTrip.id}`) && !location.pathname.includes('/day/'),
           },
           {
             path: `/trips/${activeTrip.id}/day/${currentDay}`,
             label: '今天',
-            icon: '🎉',
+            icon: <SparklesIcon className="w-6 h-6" />,
             active: location.pathname === `/trips/${activeTrip.id}/day/${currentDay}`,
           },
         ]
@@ -67,7 +68,7 @@ export function BottomNavigation() {
                 : 'text-slate-400 active:text-slate-200'
             )}
           >
-            <span className={classNames(typography.sizes.nav.icon, 'leading-none')}>
+            <span className={classNames('leading-none', item.active ? 'text-white' : 'text-slate-400')}>
               {item.icon}
             </span>
             <span className={classNames(typography.sizes.nav.label, typography.weights.medium, typography.lineHeights.tight)}>
