@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Trip } from '../types';
 import { getTripStatus } from '../utils/dateUtils';
+import { getCardBackgroundStyle } from '../utils/cardBackgrounds';
 
 interface TripCardProps {
   trip: Trip;
@@ -23,6 +24,9 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
     }, 300);
   };
 
+  // Get beautiful background style
+  const backgroundStyle = getCardBackgroundStyle(trip.imageUrl, 0);
+
   return (
     <Link
       to={`/trips/${trip.id}`}
@@ -31,10 +35,14 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
       style={{ animationDelay: `${animationDelay}s` }}
     >
       <div className="bg-black/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/[0.2] h-full flex flex-col transition-all duration-500 hover:border-white/[0.3] hover:shadow-2xl hover:shadow-black/50 hover:-translate-y-1">
-        {/* Image/Emoji Header */}
-        <div className="relative h-48 bg-gradient-to-br from-slate-800/50 via-slate-900/30 to-slate-800/50 flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-          <span className="text-7xl md:text-8xl relative z-10 filter drop-shadow-lg">{trip.emoji}</span>
+        {/* Image/Emoji Header with beautiful background */}
+        <div 
+          className="relative h-48 flex items-center justify-center overflow-hidden"
+          style={backgroundStyle}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          <div className="absolute inset-0 bg-black/30"></div>
+          <span className="text-7xl md:text-8xl relative z-10 filter drop-shadow-2xl">{trip.emoji}</span>
           {/* Status badge - top right */}
           <span className={`absolute top-4 right-4 text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-md ${statusColor} border border-white/20 shadow-lg z-20`}>
             {status.status === 'active' ? '进行中' : status.status === 'upcoming' ? '即将开始' : '已结束'}

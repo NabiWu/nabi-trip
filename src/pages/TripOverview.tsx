@@ -1,9 +1,11 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { DayCard } from '../components/DayCard';
-import { TodayButton } from '../components/TodayButton';
+import { TripStatusCard } from '../components/TripStatusCard';
 import { getTripById } from '../data/trips';
 import { useCurrentDate } from '../hooks/useCurrentDate';
 import { useWeather } from '../hooks/useWeather';
+import { getTripStatus } from '../utils/dateUtils';
+import { getCardBackgroundStyle } from '../utils/cardBackgrounds';
 
 export function TripOverview() {
   const { tripId } = useParams<{ tripId: string }>();
@@ -16,32 +18,28 @@ export function TripOverview() {
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         <div className="text-center text-slate-300">
           <p>未找到该旅行计划</p>
-          <Link to="/" className="text-blue-400 hover:text-blue-300 mt-4 inline-block">
-            返回主页
-          </Link>
         </div>
       </div>
     );
   }
 
+  const dateStatus = getTripStatus(trip);
+
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-5xl safe-area-top safe-area-bottom">
-      <Link 
-        to="/" 
-        className="inline-flex items-center text-slate-400 hover:text-white mb-8 transition-colors text-sm font-medium"
-      >
-        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-        </svg>
-        返回主页
-      </Link>
+      {/* Status Card - Integrated from TripStatus page */}
+      <TripStatusCard trip={trip} dateStatus={dateStatus} />
 
       <header className="mb-12 md:mb-16">
         {/* Hero Section */}
         <div className="bg-black/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/[0.2] mb-8 transition-all duration-500 hover:border-white/[0.3]">
-          {/* Header with large emoji */}
-          <div className="relative h-64 md:h-80 bg-gradient-to-br from-slate-800/30 via-slate-900/20 to-slate-800/30 flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+          {/* Header with beautiful background */}
+          <div 
+            className="relative h-64 md:h-80 flex items-center justify-center overflow-hidden"
+            style={getCardBackgroundStyle(trip.imageUrl, 0)}
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+            <div className="absolute inset-0 bg-black/40"></div>
             <span className="text-9xl md:text-[12rem] relative z-10 filter drop-shadow-2xl">{trip.emoji}</span>
           </div>
 
@@ -102,8 +100,6 @@ export function TripOverview() {
             </div>
           </div>
         </div>
-
-        <TodayButton trip={trip} />
       </header>
 
       <main className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -117,7 +113,7 @@ export function TripOverview() {
         ))}
       </main>
 
-      <footer className="text-center text-slate-500 text-sm mt-16 mb-8">
+      <footer className="text-center text-slate-500 text-sm mt-16 mb-20 md:mb-8">
         <p>点击日期卡片查看当天的详细行程</p>
       </footer>
     </div>

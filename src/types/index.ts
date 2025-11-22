@@ -14,6 +14,7 @@ export interface DayInfo {
   badge: string;
   accommodation: string;
   accommodationLink?: string;
+  imageUrl?: string; // Optional custom image URL for the day card
   transport: {
     type: string;
     details?: string;
@@ -29,6 +30,7 @@ export interface Trip {
   id: string;
   name: string;
   emoji: string;
+  imageUrl?: string; // Optional custom image URL for the trip card
   dateRange: string;
   duration: string;
   description: string;

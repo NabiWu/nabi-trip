@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { DayInfo } from '../types';
 import { formatDateDisplay } from '../utils/dateUtils';
+import { getCardBackgroundStyle } from '../utils/cardBackgrounds';
 
 interface DayCardProps {
   tripId: string;
@@ -22,6 +23,9 @@ export function DayCard({ tripId, day, animationDelay = 0 }: DayCardProps) {
     }, 300);
   };
 
+  // Get beautiful background style based on day number
+  const backgroundStyle = getCardBackgroundStyle(day.imageUrl, day.day - 1);
+
   return (
     <Link
       to={`/trips/${tripId}/day/${day.day}`}
@@ -30,12 +34,16 @@ export function DayCard({ tripId, day, animationDelay = 0 }: DayCardProps) {
       style={{ animationDelay: `${animationDelay}s` }}
     >
       <div className="bg-black/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/[0.2] h-full flex flex-col transition-all duration-500 hover:border-white/[0.3] hover:shadow-2xl hover:shadow-black/50 hover:-translate-y-1">
-        {/* Header with icon */}
-        <div className="relative h-32 bg-gradient-to-br from-slate-800/30 via-slate-900/20 to-slate-800/30 flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-          <span className="text-5xl md:text-6xl relative z-10 filter drop-shadow-lg">{icon}</span>
+        {/* Header with beautiful background */}
+        <div 
+          className="relative h-32 flex items-center justify-center overflow-hidden"
+          style={backgroundStyle}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          <div className="absolute inset-0 bg-black/30"></div>
+          <span className="text-5xl md:text-6xl relative z-10 filter drop-shadow-2xl">{icon}</span>
           {/* Day badge */}
-          <div className="absolute top-4 right-4 text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-md bg-white/[0.05] text-slate-300 border border-white/[0.10] shadow-lg z-20">
+          <div className="absolute top-4 right-4 text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-md bg-white/[0.15] text-white border border-white/30 shadow-lg z-20">
             Day {day.day}
           </div>
         </div>

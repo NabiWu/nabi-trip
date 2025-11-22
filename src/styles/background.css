@@ -34,18 +34,23 @@
   transition: opacity 0.6s ease-in-out;
 }
 
-/* Dynamic background image - set via CSS variable */
+/* Dynamic background gradient - set via CSS variable */
 .mexico-background[data-bg-image]::before {
-  background-image: 
-    var(--bg-image, none),
-    linear-gradient(
-      rgba(0, 0, 0, 0.92),
-      rgba(0, 0, 0, 0.98)
-    );
-  background-size: cover, cover;
-  background-position: center, center;
-  background-attachment: fixed, fixed;
-  opacity: 0.9;
+  background-image: var(--bg-image, none);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  background-attachment: fixed;
+  opacity: 0.6;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* Smooth transition when background changes */

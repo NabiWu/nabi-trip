@@ -1,47 +1,35 @@
 /**
- * Background images for Mexico trip locations
- * 为三个主要城市准备的好看背景图片
- * All images use verified Unsplash URLs
+ * Dynamic gradient backgrounds for pages
+ * Using beautiful animated gradients instead of static images
  */
-
-export const MEXICO_BACKGROUND_IMAGES = {
-  // 主页 - 快乐旅行主题
-  Home: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-  
-  // 墨西哥城 (CDMX) - Beautiful cityscape with iconic buildings
-  CDMX: 'https://images.unsplash.com/photo-1520986606214-8b456906c813?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-  
-  // 圣米格尔 (San Miguel de Allende) - Colorful colonial architecture
-  SanMiguel: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-  
-  // 瓜纳华托 (Guanajuato) - Vibrant colorful hillside city
-  Guanajuato: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-} as const;
 
 /**
- * 根据页面路径获取背景图片
+ * Generate a beautiful animated gradient background based on route
  */
 export function getBackgroundForRoute(pathname: string, dayNumber?: number): string {
-  // 主页
+  // Use CSS gradients instead of images for better performance and aesthetics
+  // These create beautiful, smooth animated backgrounds
+  
   if (pathname === '/' || pathname === '/nabi-trip' || pathname === '/nabi-trip/') {
-    return MEXICO_BACKGROUND_IMAGES.Home;
+    // Home page - vibrant travel theme
+    return 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%)';
   }
   
-  // DayDetail 页面 - 根据天数分组
+  // DayDetail pages - different gradient for each day
   if (dayNumber !== undefined) {
-    // Day 4: San Miguel de Allende
-    if (dayNumber === 4) {
-      return MEXICO_BACKGROUND_IMAGES.SanMiguel;
-    }
-    // Day 5-6: Guanajuato
-    if (dayNumber === 5 || dayNumber === 6) {
-      return MEXICO_BACKGROUND_IMAGES.Guanajuato;
-    }
-    // Day 1-3, 7-8: CDMX
-    return MEXICO_BACKGROUND_IMAGES.CDMX;
+    const dayGradients = [
+      'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)', // Day 1
+      'linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%)', // Day 2
+      'linear-gradient(135deg, #fa709a 0%, #fee140 50%, #ff6a88 100%)', // Day 3
+      'linear-gradient(135deg, #30cfd0 0%, #330867 50%, #764ba2 100%)', // Day 4
+      'linear-gradient(135deg, #f6d365 0%, #fda085 50%, #ff6a88 100%)', // Day 5
+      'linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #d299c2 100%)', // Day 6
+      'linear-gradient(135deg, #84fab0 0%, #8fd3f4 50%, #a8edea 100%)', // Day 7
+      'linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)', // Day 8
+    ];
+    return dayGradients[(dayNumber - 1) % dayGradients.length];
   }
   
-  // TripOverview 或其他页面 - 使用 CDMX
-  return MEXICO_BACKGROUND_IMAGES.CDMX;
+  // TripOverview - default beautiful gradient
+  return 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)';
 }
-

@@ -38,7 +38,7 @@ export function Home() {
         </div>
       </div>
 
-      <footer className="text-center text-slate-400 text-sm mt-16">
+      <footer className="text-center text-slate-400 text-sm mt-16 mb-20 md:mb-8">
         <p>最后更新：2025 年 · 使用 React + TypeScript 构建</p>
       </footer>
     </div>

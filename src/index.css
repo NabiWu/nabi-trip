@@ -76,3 +76,61 @@ body {
   overflow-x: hidden;
 }
 
+/* Page transition animation */
+.page-transition {
+  animation: pageFadeIn 0.3s ease-out;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Ensure content doesn't get hidden behind bottom nav on mobile */
+@media (max-width: 768px) {
+  .safe-area-bottom {
+    padding-bottom: max(5rem, env(safe-area-inset-bottom, 0px) + 5rem);
+  }
+  
+  /* Better scrolling on mobile */
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Swipe indicator hint */
+  .swipe-hint {
+    position: relative;
+  }
+  
+  .swipe-hint::before {
+    content: '← 滑动切换 →';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    animation: fadeInOut 3s ease-in-out;
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+}
+
