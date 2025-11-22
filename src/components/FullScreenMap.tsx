@@ -1,41 +1,9 @@
 import { useState, useEffect } from 'react';
 import type { Location } from '../types';
+import { extractLocationName, convertToEmbedUrl } from '../utils/mapUtils';
 
 interface FullScreenMapProps {
   location: Location | string;
-}
-
-/**
- * Extract location name from Google Maps URL
- */
-function extractLocationName(mapsUrl: string): string {
-  try {
-    const url = new URL(mapsUrl);
-    const query = url.searchParams.get('query');
-    if (query) {
-      return decodeURIComponent(query).replace(/\+/g, ' ');
-    }
-    return 'Location';
-  } catch {
-    return 'Location';
-  }
-}
-
-/**
- * Convert Google Maps search URL to embed URL
- */
-function convertToEmbedUrl(mapsUrl: string): string {
-  try {
-    const url = new URL(mapsUrl);
-    const query = url.searchParams.get('query');
-    if (query) {
-      const encodedQuery = encodeURIComponent(query);
-      return `https://www.google.com/maps?q=${encodedQuery}&output=embed&hl=zh-CN`;
-    }
-    return mapsUrl;
-  } catch {
-    return mapsUrl;
-  }
 }
 
 export function FullScreenMap({ location }: FullScreenMapProps) {

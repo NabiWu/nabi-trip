@@ -4,8 +4,8 @@ import { TripStatusCard } from '../components/TripStatusCard';
 import { getTripById } from '../data/trips';
 import { useCurrentDate } from '../hooks/useCurrentDate';
 import { useWeather } from '../hooks/useWeather';
+import { useImagePreload } from '../hooks/useImagePreload';
 import { getTripStatus } from '../utils/dateUtils';
-import { getCardBackgroundStyle } from '../utils/cardBackgrounds';
 import { CalendarIcon } from '../components/icons';
 import { WeatherIcon } from '../components/icons/WeatherIcon';
 
@@ -14,6 +14,17 @@ export function TripOverview() {
   const trip = tripId ? getTripById(tripId) : null;
   const currentDate = useCurrentDate();
   const weather = useWeather();
+
+  // Preload first few day images for better UX
+  const preloadImages = trip
+    ? trip.days.slice(0, 3).map(day => `/nabi-trip/images/${day.day}.jpg`)
+    : [];
+  
+  if (trip?.id === 'mexico') {
+    preloadImages.unshift('/nabi-trip/images/flag.jpg');
+  }
+  
+  useImagePreload(preloadImages);
 
   if (!trip) {
     return (
@@ -35,14 +46,18 @@ export function TripOverview() {
       <header className="mb-12 md:mb-16">
         {/* Hero Section */}
         <div className="bg-black/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/[0.2] mb-8 transition-all duration-500 hover:border-white/[0.3]">
-          {/* Header with beautiful background */}
+          {/* Header with flag background */}
           <div 
-            className="relative h-64 md:h-80 flex items-center justify-center overflow-hidden"
-            style={getCardBackgroundStyle(trip.imageUrl, 0)}
+            className="relative h-64 md:h-80 flex items-center justify-center overflow-hidden bg-slate-900"
+            style={{
+              backgroundImage: `url('/nabi-trip/images/flag.jpg')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
-            <div className="absolute inset-0 bg-black/40"></div>
-            <span className="text-9xl md:text-[12rem] relative z-10 filter drop-shadow-2xl">{trip.emoji}</span>
+            {/* Very light gradient only at bottom for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
           </div>
 
           {/* Content */}

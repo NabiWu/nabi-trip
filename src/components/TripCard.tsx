@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Trip } from '../types';
 import { getTripStatus } from '../utils/dateUtils';
-import { getCardBackgroundStyle } from '../utils/cardBackgrounds';
+import { useImagePreload } from '../hooks/useImagePreload';
 
 interface TripCardProps {
   trip: Trip;
@@ -24,8 +24,13 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
     }, 300);
   };
 
-  // Get beautiful background style
-  const backgroundStyle = getCardBackgroundStyle(trip.imageUrl, 0);
+  // Use flag image for Mexico trip, otherwise use emoji background
+  const isMexicoTrip = trip.id === 'mexico';
+  const backgroundImage = isMexicoTrip ? 'flag.jpg' : null;
+  const imageUrl = backgroundImage ? `/nabi-trip/images/${backgroundImage}` : null;
+
+  // Preload flag image for Mexico trip (always call hook, pass empty array if not Mexico)
+  useImagePreload(isMexicoTrip && imageUrl ? [imageUrl] : []);
 
   return (
     <Link
@@ -35,14 +40,26 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
       style={{ animationDelay: `${animationDelay}s` }}
     >
       <div className="bg-black/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/[0.2] h-full flex flex-col transition-all duration-500 hover:border-white/[0.3] hover:shadow-2xl hover:shadow-black/50 hover:-translate-y-1">
-        {/* Image/Emoji Header with beautiful background */}
+        {/* Image/Emoji Header with background */}
         <div 
-          className="relative h-48 flex items-center justify-center overflow-hidden"
-          style={backgroundStyle}
+          className="relative h-48 flex items-center justify-center overflow-hidden bg-slate-900"
+          style={imageUrl ? {
+            backgroundImage: `url('${imageUrl}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          } : undefined}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-          <div className="absolute inset-0 bg-black/30"></div>
-          <span className="text-7xl md:text-8xl relative z-10 filter drop-shadow-2xl">{trip.emoji}</span>
+          {!backgroundImage && (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-black/30"></div>
+              <span className="text-7xl md:text-8xl relative z-10 filter drop-shadow-2xl">{trip.emoji}</span>
+            </>
+          )}
+          {backgroundImage && (
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+          )}
           {/* Status badge - top right */}
           <span className={`absolute top-4 right-4 text-base px-4 py-2 rounded-full font-medium backdrop-blur-md ${statusColor} border border-white/20 shadow-lg z-20`}>
             {status.status === 'active' ? '进行中' : status.status === 'upcoming' ? '即将开始' : '已结束'}

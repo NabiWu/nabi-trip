@@ -6,9 +6,61 @@ import { LocationMap, MultiLocationMap } from '../components/LocationMap';
 import { DayDetailNavigation } from '../components/DayDetailNavigation';
 import { DayDetailHeader } from '../components/DayDetailHeader';
 import { useSwipeWithFeedback } from '../hooks/useSwipeWithFeedback';
+import { useImagePreload } from '../hooks/useImagePreload';
 import { classNames } from '../utils/classNames';
 import { BuildingIcon, MapPinIcon, UtensilsIcon, LightBulbIcon, PlaneIcon } from '../components/icons';
 import type { Location } from '../types';
+import type { DayInfo } from '../types';
+
+/**
+ * Get background image path based on day information
+ * Uses the 8 images provided by user: 1.jpg to 8.jpg
+ */
+function getDayBackgroundImage(day: DayInfo): string {
+  // Use day number directly to select the corresponding image (1.jpg to 8.jpg)
+  // Ensure day number is between 1 and 8
+  const dayNum = Math.min(Math.max(day.day, 1), 8);
+  return `${dayNum}.jpg`;
+}
+
+/**
+ * Header background component with location-based image
+ * Uses lazy loading for better performance
+ */
+function HeaderBackground({ day }: { day: DayInfo }) {
+  const backgroundImage = getDayBackgroundImage(day);
+  const imageUrl = `/nabi-trip/images/${backgroundImage}`;
+  
+  // Preload next and previous day images for smooth navigation
+  const nextDay = day.day < 8 ? day.day + 1 : 1;
+  const prevDay = day.day > 1 ? day.day - 1 : 8;
+  const preloadImages = [
+    `/nabi-trip/images/${nextDay}.jpg`,
+    `/nabi-trip/images/${prevDay}.jpg`,
+  ];
+  
+  useImagePreload(preloadImages);
+  
+  return (
+    <div 
+      className="relative h-48 md:h-64 flex items-center justify-center overflow-hidden bg-slate-900"
+      style={{
+        backgroundImage: `url('${imageUrl}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      {/* Very light gradient only at bottom for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+      <div className="absolute top-6 left-6 z-10">
+        <div className="text-sm font-medium text-white/90 px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/30 shadow-xl">
+          Day {day.day} <span className="text-white/60">·</span> <span className="text-white/80">{day.badge}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function renderLocation(item: string | Location) {
   if (typeof item === 'string') {
@@ -173,15 +225,8 @@ export function DayDetail() {
           opacity: swipeOpacity,
         }}
       >
-        {/* Header */}
-        <div className="relative h-48 md:h-64 bg-gradient-to-br from-slate-800/30 via-slate-900/20 to-slate-800/30 flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-          <div className="absolute top-6 left-6">
-            <div className="text-sm font-medium text-white/90 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
-              Day {day.day} <span className="text-white/60">·</span> <span className="text-white/80">{day.badge}</span>
-            </div>
-          </div>
-        </div>
+        {/* Header with location-based background */}
+        <HeaderBackground day={day} />
 
         {/* Content */}
         <div className="p-4 md:p-6 lg:p-8">
