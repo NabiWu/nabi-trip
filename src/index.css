@@ -93,7 +93,7 @@ body {
 /* Ensure content doesn't get hidden behind bottom nav on mobile */
 @media (max-width: 768px) {
   .safe-area-bottom {
-    padding-bottom: max(5rem, env(safe-area-inset-bottom, 0px) + 5rem);
+    padding-bottom: max(4rem, env(safe-area-inset-bottom, 0px) + 4rem);
   }
   
   /* Better scrolling on mobile */
