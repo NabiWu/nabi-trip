@@ -1,21 +1,25 @@
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { getTripById } from '../data/trips';
 import { formatDateDisplay, getDayByNumber, getTripStatus } from '../utils/dateUtils';
 import { LocationMap, MultiLocationMap } from '../components/LocationMap';
-import { useSwipe } from '../hooks/useSwipe';
+import { DayDetailNavigation } from '../components/DayDetailNavigation';
+import { DayDetailHeader } from '../components/DayDetailHeader';
+import { useSwipeWithFeedback } from '../hooks/useSwipeWithFeedback';
+import { classNames } from '../utils/classNames';
+import { BuildingIcon, MapPinIcon, UtensilsIcon, LightBulbIcon, PlaneIcon } from '../components/icons';
 import type { Location } from '../types';
 
 function renderLocation(item: string | Location) {
   if (typeof item === 'string') {
-    return <span className="text-slate-300">{item}</span>;
+    return <span className="text-white/90">{item}</span>;
   }
   return (
     <a
       href={item.mapsUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-white hover:text-slate-300 underline transition-colors"
+      className="text-white hover:text-blue-300 underline underline-offset-2 decoration-blue-400/50 hover:decoration-blue-400 transition-all font-medium"
     >
       {item.name}
     </a>
@@ -46,12 +50,29 @@ export function DayDetail() {
     }
   }
   
+  // Track previous day number for animation direction
+  const prevDayNumRef = useRef<number | null>(null);
+  
   // Force re-render when route changes by using location.key
   // This ensures the component updates when navigating between days
   useEffect(() => {
     // Scroll to top when route changes
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+    
+    // Determine animation direction based on day change
+    if (prevDayNumRef.current !== null && dayNum) {
+      const direction = dayNum > prevDayNumRef.current ? 'right' : 'left';
+      const contentElement = document.querySelector('.day-detail-content') as HTMLElement;
+      if (contentElement) {
+        contentElement.classList.remove('slide-in-left', 'slide-in-right');
+        // Force reflow
+        void contentElement.offsetWidth;
+        contentElement.classList.add(direction === 'right' ? 'slide-in-right' : 'slide-in-left');
+      }
+    }
+    
+    prevDayNumRef.current = dayNum;
+  }, [location.pathname, dayNum]);
 
   if (!trip) {
     return (
@@ -100,9 +121,9 @@ export function DayDetail() {
   const tripStatus = getTripStatus(trip);
   const isToday = tripStatus.status === 'active' && tripStatus.currentDay === dayNum;
 
-  // Swipe navigation for mobile
+  // Enhanced swipe navigation with visual feedback
   const navigate = useNavigate();
-  const swipeHandlers = useSwipe({
+  const { handlers: swipeHandlers, swipeState } = useSwipeWithFeedback({
     onSwipeLeft: () => {
       if (nextDayValid) {
         navigate(`/trips/${tripId}/day/${nextDay}`);
@@ -113,52 +134,51 @@ export function DayDetail() {
         navigate(`/trips/${tripId}/day/${prevDay}`);
       }
     },
-    threshold: 80, // Minimum swipe distance
-    velocity: 0.2, // Minimum swipe velocity
+    threshold: 60, // Reduced from 80 for easier triggering
+    velocity: 0.15, // Reduced from 0.2 for easier triggering
+    preventScroll: true,
   });
+
+  // Calculate transform for swipe feedback
+  const swipeTransform = swipeState.isSwiping && swipeState.deltaX !== 0
+    ? `translateX(${swipeState.deltaX}px)`
+    : undefined;
+  
+  const swipeOpacity = swipeState.isSwiping
+    ? 1 - Math.min(0.3, Math.abs(swipeState.deltaX) / 200)
+    : undefined;
 
   return (
     <div 
-      className="container mx-auto px-4 py-6 md:py-8 max-w-4xl safe-area-top safe-area-bottom touch-pan-y"
+      className="container mx-auto px-4 py-6 md:py-8 max-w-4xl safe-area-top touch-pan-y relative"
       {...swipeHandlers}
+      style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 120px)' }}
     >
-      <div className="mb-6 md:mb-8">
-        <Link 
-          to={`/trips/${tripId}`} 
-          className="inline-flex items-center text-slate-400 hover:text-white active:text-slate-200 transition-colors text-base font-medium min-h-[44px]"
-        >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-          </svg>
-          返回总览
-        </Link>
-      </div>
-      
-      {/* Swipe hint for mobile */}
-      <div className="md:hidden mb-4 text-center">
-        <p className="text-base text-slate-500">左右滑动切换日期</p>
-      </div>
-
-      {/* Back to Today Button - Only show if not on today */}
-      {tripStatus.status === 'active' && tripStatus.currentDay && !isToday && (
-        <div className="mb-6 animate-fade-in">
-          <Link
-            to={`/trips/${tripId}/day/${tripStatus.currentDay}`}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-300 rounded-xl border border-green-500/30 transition-all text-base font-medium"
-          >
-            <span>🎉</span>
-            <span>回到今天 (Day {tripStatus.currentDay})</span>
-          </Link>
-        </div>
+      {/* Header with Back Button and Today Button */}
+      {tripId && (
+        <DayDetailHeader
+          tripId={tripId}
+          showTodayButton={tripStatus.status === 'active' && tripStatus.currentDay !== undefined && !isToday}
+          todayDay={tripStatus.currentDay || undefined}
+        />
       )}
 
-      <div className="bg-black/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/[0.2] transition-all duration-500 hover:border-white/[0.3]">
+      <div 
+        className={classNames(
+          "day-detail-content bg-black/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/[0.2]",
+          swipeState.isSwiping ? "transition-none swiping" : "transition-all duration-500 hover:border-white/[0.3]"
+        )}
+        style={{
+          transform: swipeTransform,
+          opacity: swipeOpacity,
+        }}
+      >
         {/* Header */}
         <div className="relative h-48 md:h-64 bg-gradient-to-br from-slate-800/30 via-slate-900/20 to-slate-800/30 flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
           <div className="absolute top-6 left-6">
-            <div className="text-base text-slate-400 px-4 py-2 rounded-full bg-white/[0.05] border border-white/[0.08] backdrop-blur-md">
-              Day {day.day} · {day.badge}
+            <div className="text-sm font-medium text-white/90 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
+              Day {day.day} <span className="text-white/60">·</span> <span className="text-white/80">{day.badge}</span>
             </div>
           </div>
         </div>
@@ -171,7 +191,7 @@ export function DayDetail() {
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-light mb-3 md:mb-4 text-white tracking-tight">
                   {formatDateDisplay(day.date)}
                 </h1>
-                <h2 className="text-lg md:text-xl lg:text-2xl text-slate-200 leading-relaxed">
+                <h2 className="text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed font-normal">
                   {day.title}
                 </h2>
               </div>
@@ -201,11 +221,13 @@ export function DayDetail() {
             
             {/* Accommodation */}
             {day.accommodation && (
-              <div className="flex items-start gap-3 p-4 bg-black/60 rounded-2xl border border-white/[0.2]">
-                <span className="text-2xl">🏨</span>
+              <div className="flex items-start gap-4 p-5 bg-gradient-to-br from-slate-900/50 to-black/60 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300">
+                <div className="text-white/80 flex-shrink-0">
+                  <BuildingIcon className="w-8 h-8" />
+                </div>
                 <div className="flex-1">
-                  <div className="text-base text-slate-200 mb-2 uppercase tracking-wider">住宿</div>
-                  <div className="text-lg font-medium text-white">{day.accommodation}</div>
+                  <div className="text-sm text-slate-300/80 mb-2 uppercase tracking-wider font-medium">住宿</div>
+                  <div className="text-lg font-semibold text-white">{day.accommodation}</div>
                 </div>
               </div>
             )}
@@ -213,44 +235,48 @@ export function DayDetail() {
 
           <div className="space-y-4">
             {/* Transportation */}
-            <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
-              <div className="flex items-center gap-3 mb-3 md:mb-4">
-                <span className="text-xl md:text-2xl">{day.transport.type.split(' ')[0]}</span>
-                <h3 className="text-base md:text-lg font-semibold text-white uppercase tracking-wider">交通</h3>
+            <div className="bg-gradient-to-br from-slate-900/50 to-black/60 rounded-2xl p-5 md:p-6 lg:p-7 border border-white/10 hover:border-white/20 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4 md:mb-5">
+                <div className="text-white/80 flex-shrink-0">
+                  <PlaneIcon className="w-7 h-7 md:w-8 md:h-8" />
+                </div>
+                <h3 className="text-base md:text-lg font-semibold text-white/90 uppercase tracking-wider">交通</h3>
               </div>
-              <div className="text-slate-200 text-base md:text-lg leading-relaxed space-y-2">
-                {day.transport.details && <p>{day.transport.details}</p>}
+              <div className="text-white/80 text-base md:text-lg leading-relaxed space-y-3">
+                {day.transport.details && <p className="text-white">{day.transport.details}</p>}
                 {day.transport.departure && (
-                  <p className="flex items-start gap-2">
-                    <span className="text-slate-300">出发：</span>
-                    <span>{renderLocation(day.transport.departure)}</span>
-                  </p>
+                  <div className="flex items-start gap-2">
+                    <span className="text-slate-300/80 font-medium flex-shrink-0">出发：</span>
+                    <span className="text-white/90">{renderLocation(day.transport.departure)}</span>
+                  </div>
                 )}
                 {day.transport.arrival && (
-                  <p className="flex items-start gap-2">
-                    <span className="text-slate-300">抵达：</span>
-                    <span>{renderLocation(day.transport.arrival)}</span>
-                  </p>
+                  <div className="flex items-start gap-2">
+                    <span className="text-slate-300/80 font-medium flex-shrink-0">抵达：</span>
+                    <span className="text-white/90">{renderLocation(day.transport.arrival)}</span>
+                  </div>
                 )}
                 {!day.transport.details && !day.transport.departure && (
-                  <p>{day.transport.type}</p>
+                  <p className="text-white">{day.transport.type}</p>
                 )}
               </div>
             </div>
 
             {/* Accommodation with link */}
             {day.accommodationLink && (
-              <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
-                <div className="flex items-center gap-3 mb-3 md:mb-4">
-                  <span className="text-xl md:text-2xl">🏨</span>
-                  <h3 className="text-base md:text-lg font-semibold text-white uppercase tracking-wider">住宿</h3>
+              <div className="bg-gradient-to-br from-slate-900/50 to-black/60 rounded-2xl p-5 md:p-6 lg:p-7 border border-white/10 hover:border-white/20 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-4 md:mb-5">
+                  <div className="text-white/80 flex-shrink-0">
+                    <BuildingIcon className="w-7 h-7 md:w-8 md:h-8" />
+                  </div>
+                  <h3 className="text-base md:text-lg font-semibold text-white/90 uppercase tracking-wider">住宿</h3>
                 </div>
-                <div className="text-slate-200 text-base mb-4">
+                <div className="text-lg font-semibold text-white mb-4">
                   <a
                     href={day.accommodationLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-slate-300 underline transition-colors"
+                    className="text-white hover:text-blue-300 underline underline-offset-2 decoration-blue-400/50 hover:decoration-blue-400 transition-all"
                   >
                     {day.accommodation}
                   </a>
@@ -264,16 +290,18 @@ export function DayDetail() {
 
             {/* Attractions */}
             {day.attractions.length > 0 && (
-              <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
-                <div className="flex items-center gap-3 mb-3 md:mb-4">
-                  <span className="text-xl md:text-2xl">📍</span>
-                  <h3 className="text-base md:text-lg font-semibold text-white uppercase tracking-wider">关键景点</h3>
+              <div className="bg-gradient-to-br from-slate-900/50 to-black/60 rounded-2xl p-5 md:p-6 lg:p-7 border border-white/10 hover:border-white/20 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-4 md:mb-5">
+                  <div className="text-white/80 flex-shrink-0">
+                    <MapPinIcon className="w-7 h-7 md:w-8 md:h-8" />
+                  </div>
+                  <h3 className="text-base md:text-lg font-semibold text-white/90 uppercase tracking-wider">关键景点</h3>
                 </div>
-                <div className="text-slate-200 text-base md:text-lg mb-3 md:mb-4 leading-relaxed">
+                <div className="text-white/80 text-base md:text-lg mb-4 md:mb-5 leading-relaxed">
                   {day.attractions.map((item, idx) => (
                     <span key={idx}>
                       {renderLocation(item)}
-                      {idx < day.attractions.length - 1 && ' · '}
+                      {idx < day.attractions.length - 1 && <span className="text-white/40 mx-2">·</span>}
                     </span>
                   ))}
                 </div>
@@ -283,16 +311,18 @@ export function DayDetail() {
 
             {/* Dining */}
             {day.dining.length > 0 && (
-              <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
-                <div className="flex items-center gap-3 mb-3 md:mb-4">
-                  <span className="text-xl md:text-2xl">🍽️</span>
-                  <h3 className="text-base md:text-lg font-semibold text-white uppercase tracking-wider">餐饮建议</h3>
+              <div className="bg-gradient-to-br from-slate-900/50 to-black/60 rounded-2xl p-5 md:p-6 lg:p-7 border border-white/10 hover:border-white/20 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-4 md:mb-5">
+                  <div className="text-white/80 flex-shrink-0">
+                    <UtensilsIcon className="w-7 h-7 md:w-8 md:h-8" />
+                  </div>
+                  <h3 className="text-base md:text-lg font-semibold text-white/90 uppercase tracking-wider">餐饮建议</h3>
                 </div>
-                <div className="text-slate-200 text-base md:text-lg mb-3 md:mb-4 leading-relaxed">
+                <div className="text-white/80 text-base md:text-lg mb-4 md:mb-5 leading-relaxed">
                   {day.dining.map((item, idx) => (
                     <span key={idx}>
                       {renderLocation(item)}
-                      {idx < day.dining.length - 1 && ' · '}
+                      {idx < day.dining.length - 1 && <span className="text-white/40 mx-2">·</span>}
                     </span>
                   ))}
                 </div>
@@ -302,12 +332,14 @@ export function DayDetail() {
 
             {/* Note */}
             {day.note && (
-              <div className="bg-black/60 border border-white/[0.2] rounded-2xl p-3 md:p-4 lg:p-5">
-                <div className="flex items-start gap-2 md:gap-3">
-                  <span className="text-lg md:text-xl">💡</span>
+              <div className="bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-transparent border border-amber-500/20 rounded-2xl p-4 md:p-5 lg:p-6">
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="text-amber-300/80 flex-shrink-0">
+                    <LightBulbIcon className="w-7 h-7 md:w-8 md:h-8" />
+                  </div>
                   <div className="flex-1">
-                    <div className="text-base text-slate-200 mb-2 uppercase tracking-wider">备注</div>
-                    <p className="text-white text-base md:text-lg leading-relaxed">{day.note}</p>
+                    <div className="text-sm text-amber-300/80 mb-2 uppercase tracking-wider font-medium">备注</div>
+                    <p className="text-white/90 text-base md:text-lg leading-relaxed">{day.note}</p>
                   </div>
                 </div>
               </div>
@@ -316,36 +348,30 @@ export function DayDetail() {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-6 md:mt-8 mb-20 md:mb-8">
-        {prevDayValid && (
-          <Link
-            to={`/trips/${tripId}/day/${prevDay}`}
-            className="flex-1 sm:flex-none px-5 py-3 bg-black/30 hover:bg-black/50 rounded-2xl border border-white/[0.12] hover:border-white/[0.2] transition-all duration-300 text-base text-center font-medium text-white hover:text-white flex items-center justify-center gap-2"
-            >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-            Day {prevDay}
-          </Link>
-        )}
+      {/* Return to overview button */}
+      <div className="flex justify-center mt-8 md:mt-10 mb-20 md:mb-24">
         <Link
           to={`/trips/${tripId}`}
-          className="flex-1 sm:flex-none px-5 py-3 bg-white/[0.02] hover:bg-white/[0.05] rounded-2xl border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300 text-base text-center font-medium text-slate-300 hover:text-white flex items-center justify-center"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 text-base font-semibold text-white/80 hover:text-white shadow-lg hover:shadow-xl"
         >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
           返回总览
         </Link>
-        {nextDayValid && (
-          <Link
-            to={`/trips/${tripId}/day/${nextDay}`}
-            className="flex-1 sm:flex-none px-5 py-3 bg-black/30 hover:bg-black/50 rounded-2xl border border-white/[0.12] hover:border-white/[0.2] transition-all duration-300 text-base text-center font-medium text-white hover:text-white flex items-center justify-center gap-2"
-          >
-            Day {nextDay}
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </Link>
-        )}
       </div>
+
+      {/* Floating Navigation Bar */}
+      {tripId && (
+        <DayDetailNavigation
+          tripId={tripId}
+          prevDay={prevDayValid ? prevDay : null}
+          nextDay={nextDayValid ? nextDay : null}
+          prevDayValid={prevDayValid}
+          nextDayValid={nextDayValid}
+          swipeState={swipeState}
+        />
+      )}
     </div>
   );
 }

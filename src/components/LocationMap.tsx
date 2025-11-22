@@ -15,7 +15,6 @@ function extractLocationName(mapsUrl: string): string {
     const url = new URL(mapsUrl);
     const query = url.searchParams.get('query');
     if (query) {
-      // Decode and clean up the query
       return decodeURIComponent(query).replace(/\+/g, ' ');
     }
     return 'Location';
@@ -26,19 +25,15 @@ function extractLocationName(mapsUrl: string): string {
 
 /**
  * Convert Google Maps search URL to embed URL
- * Uses Google Maps iframe embed which doesn't require API key
  */
 function convertToEmbedUrl(mapsUrl: string): string {
   try {
     const url = new URL(mapsUrl);
     const query = url.searchParams.get('query');
     if (query) {
-      // Convert to Google Maps embed format
-      // Format: https://www.google.com/maps?q=QUERY&output=embed
       const encodedQuery = encodeURIComponent(query);
       return `https://www.google.com/maps?q=${encodedQuery}&output=embed&hl=zh-CN`;
     }
-    // If it's already a different format, try to extract location name
     return mapsUrl;
   } catch {
     return mapsUrl;
@@ -60,7 +55,7 @@ export function LocationMap({ location, label: _label }: LocationMapProps) {
       <div className="flex flex-col sm:flex-row gap-2">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 active:text-blue-200 transition-colors min-h-[44px] px-3"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-purple-300 hover:text-purple-200 active:text-purple-100 transition-colors min-h-[40px] px-3"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -68,10 +63,8 @@ export function LocationMap({ location, label: _label }: LocationMapProps) {
           </svg>
           <span>{isOpen ? '隐藏地图' : '查看地图'}</span>
         </button>
-        {/* Full screen map button for mobile */}
-        <div className="sm:hidden">
-          <FullScreenMap location={location} />
-        </div>
+        {/* Full screen map button */}
+        <FullScreenMap location={location} />
       </div>
 
       {isOpen && (
@@ -92,7 +85,7 @@ export function LocationMap({ location, label: _label }: LocationMapProps) {
               href={location.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-400 hover:text-blue-300 active:text-blue-200 underline min-h-[44px] inline-flex items-center justify-center"
+              className="text-purple-300 hover:text-purple-200 active:text-purple-100 underline min-h-[40px] inline-flex items-center justify-center"
             >
               在 Google Maps 中打开 {locationName}
             </a>
@@ -151,18 +144,22 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
 
   return (
     <div className="mt-4">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex items-center gap-2 text-sm font-semibold text-purple-300 hover:text-purple-200 active:text-purple-100 transition-colors min-h-[44px] px-2"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
-        </svg>
-        <span>{isOpen ? '隐藏地图' : '查看地图'}</span>
-        {validLocations.length > 1 && (
-          <span className="text-sm text-slate-400">({validLocations.length} 个地点)</span>
-        )}
-      </button>
+      <div className="flex flex-col sm:flex-row gap-2">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-purple-300 hover:text-purple-200 active:text-purple-100 transition-colors min-h-[40px] px-2"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+          </svg>
+          <span>{isOpen ? '隐藏地图' : '查看地图'}</span>
+          {validLocations.length > 1 && (
+            <span className="text-sm text-slate-400">({validLocations.length} 个地点)</span>
+          )}
+        </button>
+        {/* Full screen map button */}
+        <FullScreenMap location={selectedLocation} />
+      </div>
 
       {isOpen && (
         <div className="mt-3 rounded-lg overflow-hidden border border-white/20">
@@ -178,7 +175,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
                     <button
                       key={idx}
                       onClick={() => setSelectedIndex(idx)}
-                      className={`px-2 md:px-3 py-1.5 md:py-2 rounded-lg text-sm transition-all border min-h-[36px] md:min-h-[44px] flex items-center ${
+                      className={`px-2 md:px-3 py-1.5 md:py-2 rounded-lg text-sm transition-all border min-h-[36px] md:min-h-[40px] flex items-center ${
                         isSelected
                           ? 'bg-purple-500/30 text-purple-200 border-purple-400/50'
                           : 'bg-white/5 text-slate-300 border-white/10 active:bg-white/10'
@@ -215,7 +212,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
                   href={selectedLocation.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-400 hover:text-blue-300 underline ml-1"
+                  className="text-purple-300 hover:text-purple-200 underline ml-1"
                 >
                   {locationName}
                 </a>
@@ -227,7 +224,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
                       href={generateAllLocationsLink()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 px-3 py-2 md:py-1.5 bg-blue-500/20 active:bg-blue-500/30 text-blue-200 rounded-lg border border-blue-400/30 transition-all text-sm font-medium min-h-[44px]"
+                      className="inline-flex items-center gap-1 px-3 py-2 md:py-1.5 bg-blue-500/20 active:bg-blue-500/30 text-blue-200 rounded-lg border border-blue-400/30 transition-all text-sm font-medium min-h-[40px]"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
@@ -246,7 +243,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
                             href={loc.mapsUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline text-sm"
+                            className="text-purple-300 hover:text-purple-200 underline text-sm"
                           >
                             {name}
                           </a>

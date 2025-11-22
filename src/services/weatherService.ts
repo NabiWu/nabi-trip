@@ -51,6 +51,7 @@ export async function fetchWeather(
         current.weatherDesc?.[0]?.value ||
         '未知',
       icon: getWeatherIcon(current.weatherCode),
+      code: current.weatherCode,
       city: cityName || '当前位置',
     };
   } catch (error) {

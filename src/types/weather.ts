@@ -6,6 +6,7 @@ export interface WeatherData {
   temperature: number;
   description: string;
   icon: string;
+  code?: string; // Weather code for icon mapping
   city: string;
 }
 

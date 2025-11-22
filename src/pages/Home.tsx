@@ -2,6 +2,7 @@ import { TripCard } from '../components/TripCard';
 import { CurrentInfo } from '../components/CurrentInfo';
 import { getAllTrips } from '../data/trips';
 import { AnimatedCodeBackground } from '../components/AnimatedCodeBackground';
+import { PlusIcon } from '../components/icons';
 
 export function Home() {
   return (
@@ -35,7 +36,7 @@ export function Home() {
           style={{ animationDelay: `${getAllTrips().length * 0.1}s` }}
         >
           <div className="w-16 h-16 rounded-full bg-white/[0.05] border border-white/[0.10] flex items-center justify-center mb-4">
-            <span className="text-2xl text-slate-400">➕</span>
+            <PlusIcon className="w-8 h-8 text-slate-400" />
           </div>
           <p className="text-slate-400 text-base text-center font-medium">更多旅行计划<br />即将到来</p>
         </div>

@@ -6,6 +6,8 @@ import { useCurrentDate } from '../hooks/useCurrentDate';
 import { useWeather } from '../hooks/useWeather';
 import { getTripStatus } from '../utils/dateUtils';
 import { getCardBackgroundStyle } from '../utils/cardBackgrounds';
+import { CalendarIcon } from '../components/icons';
+import { WeatherIcon } from '../components/icons/WeatherIcon';
 
 export function TripOverview() {
   const { tripId } = useParams<{ tripId: string }>();
@@ -60,7 +62,9 @@ export function TripOverview() {
                 {currentDate && (
                   <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-4 border border-white/[0.2]">
                     <div className="flex items-center gap-3">
-                      <div className="text-2xl">📅</div>
+                      <div className="text-slate-300/80">
+                        <CalendarIcon className="w-6 h-6" />
+                      </div>
                       <div>
                         <div className="text-base text-slate-500 mb-1 uppercase tracking-wider">当前日期</div>
                         <div className="text-lg font-medium text-white">{currentDate}</div>
@@ -71,7 +75,9 @@ export function TripOverview() {
                 {weather && (
                   <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-4 border border-white/[0.2]">
                     <div className="flex items-center gap-3">
-                      <div className="text-2xl">{weather.icon}</div>
+                      <div className="text-slate-300/80">
+                        <WeatherIcon code={weather.code || '800'} className="w-6 h-6" />
+                      </div>
                       <div>
                         <div className="text-base text-slate-500 mb-1 uppercase tracking-wider">当前天气</div>
                         <div className="text-lg font-medium text-white">

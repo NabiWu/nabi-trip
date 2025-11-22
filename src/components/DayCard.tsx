@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { DayInfo } from '../types';
 import { formatDateDisplay } from '../utils/dateUtils';
 import { getCardBackgroundStyle } from '../utils/cardBackgrounds';
+import { CalendarIcon, BuildingIcon, PlaneIcon } from './icons';
 
 interface DayCardProps {
   tripId: string;
@@ -9,10 +10,20 @@ interface DayCardProps {
   animationDelay?: number;
 }
 
-const dayIcons = ['📅', '🏛️', '☕', '🚌', '🏔️', '🎨', '🔄', '✈️'];
+// Icon components for different day types
+const dayIconComponents = [
+  <CalendarIcon key="0" className="w-12 h-12 md:w-16 md:h-16" />,
+  <BuildingIcon key="1" className="w-12 h-12 md:w-16 md:h-16" />,
+  <PlaneIcon key="2" className="w-12 h-12 md:w-16 md:h-16" />,
+  <PlaneIcon key="3" className="w-12 h-12 md:w-16 md:h-16" />,
+  <BuildingIcon key="4" className="w-12 h-12 md:w-16 md:h-16" />,
+  <BuildingIcon key="5" className="w-12 h-12 md:w-16 md:h-16" />,
+  <PlaneIcon key="6" className="w-12 h-12 md:w-16 md:h-16" />,
+  <PlaneIcon key="7" className="w-12 h-12 md:w-16 md:h-16" />,
+];
 
 export function DayCard({ tripId, day, animationDelay = 0 }: DayCardProps) {
-  const icon = dayIcons[day.day - 1] || '📅';
+  const icon = dayIconComponents[day.day - 1] || dayIconComponents[0];
 
   const handleClick = (e: React.MouseEvent) => {
     // Add click animation
@@ -41,7 +52,9 @@ export function DayCard({ tripId, day, animationDelay = 0 }: DayCardProps) {
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
           <div className="absolute inset-0 bg-black/30"></div>
-          <span className="text-5xl md:text-6xl relative z-10 filter drop-shadow-2xl">{icon}</span>
+          <div className="relative z-10 text-white/90 filter drop-shadow-2xl">
+            {icon}
+          </div>
           {/* Day badge */}
           <div className="absolute top-4 right-4 text-base px-4 py-2 rounded-full font-medium backdrop-blur-md bg-white/[0.15] text-white border border-white/30 shadow-lg z-20">
             Day {day.day}
@@ -69,7 +82,7 @@ export function DayCard({ tripId, day, animationDelay = 0 }: DayCardProps) {
 
           {/* Accommodation */}
           <div className="flex items-center gap-2 text-base text-slate-500 mb-4">
-            <span>🏨</span>
+            <BuildingIcon className="w-4 h-4 text-slate-400" />
             <span className="truncate">{day.accommodation}</span>
           </div>
 
