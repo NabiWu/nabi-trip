@@ -5,11 +5,21 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,18 +38,15 @@ jobs:
       - name: Copy 404.html for GitHub Pages SPA routing
         run: cp public/404.html dist/404.html
 
-      - name: Check build output
-        run: |
-          echo "Build output files:"
-          ls -la dist/
-          echo "---"
-          echo "index.html content:"
-          head -20 dist/index.html
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
 
