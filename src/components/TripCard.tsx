@@ -30,7 +30,7 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
       className="group animate-stagger h-full ripple-effect"
       style={{ animationDelay: `${animationDelay}s` }}
     >
-      <div className="card-hover bg-gradient-to-br from-white/10 via-white/5 to-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/20 hover:border-white/40 active:scale-95 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden">
+      <div className="card-hover bg-gradient-to-br from-white/10 via-white/5 to-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/20 active:scale-95 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden">
         {/* Hover glow effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-blue-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-blue-500/10 transition-all duration-300"></div>
         

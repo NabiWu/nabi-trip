@@ -1,7 +1,8 @@
 /* Modern Mexico-inspired background */
 
-/* Main background with animated gradient */
+/* Main background with animated gradient and optional image */
 .mexico-background {
+  /* Base animated gradient */
   background: linear-gradient(
     135deg,
     #0f172a 0%,
@@ -11,9 +12,51 @@
     #0f172a 100%
   );
   background-size: 400% 400%;
+  background-position: 0% 50%;
   animation: backgroundShift 20s ease infinite;
   position: relative;
   min-height: 100vh;
+  /* Optional: Add a subtle texture overlay */
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.01) 2px,
+      rgba(255, 255, 255, 0.01) 4px
+    ),
+    linear-gradient(
+      135deg,
+      #0f172a 0%,
+      #1e1b4b 25%,
+      #312e81 50%,
+      #1e1b4b 75%,
+      #0f172a 100%
+    );
+}
+
+/* Optional: Add a background image overlay (uncomment image URL to use) */
+.mexico-background::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Dark overlay to ensure text readability */
+  background: 
+    /* Uncomment the line below and add your own Mexico-themed image URL */
+    /* url('https://images.unsplash.com/photo-1532980400857-e8d9d275d858?q=80&w=2000&auto=format&fit=crop'), */
+    linear-gradient(
+      rgba(15, 23, 42, 0.75),
+      rgba(30, 27, 75, 0.85)
+    );
+  background-size: cover, cover;
+  background-position: center, center;
+  background-attachment: fixed, fixed;
+  opacity: 0.6;
+  z-index: 0;
+  pointer-events: none;
 }
 
 @keyframes backgroundShift {
@@ -26,7 +69,7 @@
 }
 
 /* Animated overlay with Mexico colors */
-.mexico-background::before {
+.mexico-background::after {
   content: '';
   position: fixed;
   top: 0;
@@ -53,32 +96,7 @@
   }
 }
 
-/* Subtle pattern overlay */
-.mexico-background::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 255, 255, 0.02) 2px,
-      rgba(255, 255, 255, 0.02) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 255, 255, 0.02) 2px,
-      rgba(255, 255, 255, 0.02) 4px
-    );
-  pointer-events: none;
-  z-index: 0;
-}
+/* Subtle pattern overlay - moved to main background */
 
 /* Floating orbs for depth */
 .mexico-background .floating-orb {
@@ -154,9 +172,7 @@
 /* Mobile optimizations for background */
 @media (max-width: 768px) {
   .mexico-background::before {
-    background: 
-      radial-gradient(circle at 20% 50%, rgba(0, 104, 71, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 50%, rgba(206, 17, 38, 0.1) 0%, transparent 50%);
+    opacity: 0.5;
   }
   
   .mexico-background .floating-orb {

@@ -55,7 +55,7 @@
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(0, 104, 71, 0.25),
               0 0 30px rgba(206, 17, 38, 0.15);
-  border-color: rgba(0, 104, 71, 0.4);
+  border-color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .day-card {
