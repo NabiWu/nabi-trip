@@ -1,43 +1,11 @@
 import { useState } from 'react';
 import { FullScreenMap } from './FullScreenMap';
 import type { Location } from '../types';
+import { extractLocationName, convertToEmbedUrl, generateAllLocationsLink } from '../utils/mapUtils';
 
 interface LocationMapProps {
   location: Location | string;
   label?: string;
-}
-
-/**
- * Extract location name from Google Maps URL
- */
-function extractLocationName(mapsUrl: string): string {
-  try {
-    const url = new URL(mapsUrl);
-    const query = url.searchParams.get('query');
-    if (query) {
-      return decodeURIComponent(query).replace(/\+/g, ' ');
-    }
-    return 'Location';
-  } catch {
-    return 'Location';
-  }
-}
-
-/**
- * Convert Google Maps search URL to embed URL
- */
-function convertToEmbedUrl(mapsUrl: string): string {
-  try {
-    const url = new URL(mapsUrl);
-    const query = url.searchParams.get('query');
-    if (query) {
-      const encodedQuery = encodeURIComponent(query);
-      return `https://www.google.com/maps?q=${encodedQuery}&output=embed&hl=zh-CN`;
-    }
-    return mapsUrl;
-  } catch {
-    return mapsUrl;
-  }
 }
 
 export function LocationMap({ location, label: _label }: LocationMapProps) {
@@ -126,21 +94,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
   const currentEmbedUrl = convertToEmbedUrl(selectedLocation.mapsUrl);
 
   // Generate a Google Maps link to view all locations
-  const generateAllLocationsLink = (): string => {
-    if (validLocations.length === 1) return validLocations[0].mapsUrl;
-    
-    const queries = validLocations.map(loc => {
-      try {
-        const url = new URL(loc.mapsUrl);
-        const query = url.searchParams.get('query');
-        return query ? decodeURIComponent(query) : (loc.name || extractLocationName(loc.mapsUrl));
-      } catch {
-        return loc.name || extractLocationName(loc.mapsUrl);
-      }
-    });
-    const allQueries = queries.join('|');
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(allQueries)}`;
-  };
+  const allLocationsLink = generateAllLocationsLink(validLocations);
 
   return (
     <div className="mt-4">
@@ -221,7 +175,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
                 <>
                   <div className="mb-2 mt-2 pt-2 border-t border-white/10">
                     <a
-                      href={generateAllLocationsLink()}
+                      href={allLocationsLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 px-3 py-2 md:py-1.5 bg-blue-500/20 active:bg-blue-500/30 text-blue-200 rounded-lg border border-blue-400/30 transition-all text-sm font-medium min-h-[40px]"

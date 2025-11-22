@@ -7,4 +7,6 @@ export * from './dateUtils';
 export * from './backgroundUtils';
 export * from './backgroundImages';
 export * from './cardBackgrounds';
+export * from './mapUtils';
+export * from './styleVariants';
 
