@@ -3,7 +3,7 @@ import type { Location } from '../types';
 
 interface LocationMapProps {
   location: Location | string;
-  label?: string;
+  label?: string; // Reserved for future use
 }
 
 /**
@@ -44,7 +44,7 @@ function convertToEmbedUrl(mapsUrl: string): string {
   }
 }
 
-export function LocationMap({ location, label }: LocationMapProps) {
+export function LocationMap({ location }: LocationMapProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   if (typeof location === 'string') {
@@ -105,7 +105,7 @@ interface MultiLocationMapProps {
 /**
  * Map component that shows multiple locations with toggle controls for each location
  */
-export function MultiLocationMap({ locations, title }: MultiLocationMapProps) {
+export function MultiLocationMap({ locations }: MultiLocationMapProps) {
   const [isOpen, setIsOpen] = useState(false);
   
   // Filter out string locations and extract valid locations
