@@ -1,0 +1,106 @@
+@import './styles/animations.css';
+@import './styles/mobile-optimizations.css';
+@import './styles/background.css';
+@import './styles/mexico-theme.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  /* Ensure proper layout */
+  display: flex;
+  flex-direction: column;
+}
+
+.card-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.card-hover:hover::before {
+  left: 100%;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 104, 71, 0.25),
+              0 0 30px rgba(206, 17, 38, 0.15);
+  border-color: rgba(0, 104, 71, 0.4);
+}
+
+.day-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  /* Ensure proper layout */
+  display: block;
+  height: 100%;
+}
+
+.day-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 104, 71, 0.3),
+    rgba(255, 255, 255, 0.1),
+    rgba(206, 17, 38, 0.3)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.day-card:hover::after {
+  opacity: 1;
+}
+
+.day-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -12px rgba(0, 104, 71, 0.3),
+              0 0 25px rgba(206, 17, 38, 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Smooth page transitions */
+body {
+  overflow-x: hidden;
+}
+

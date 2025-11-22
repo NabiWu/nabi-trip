@@ -1,0 +1,348 @@
+/* Mexico-inspired color palette: Green, White, Red */
+:root {
+  --mexico-green: #006847;
+  --mexico-white: #FFFFFF;
+  --mexico-red: #CE1126;
+  --mexico-gold: #FFD700;
+}
+
+/* Animated gradient background - Mexico inspired */
+@keyframes mexicoGradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.mexico-gradient-bg {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 104, 71, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(206, 17, 38, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%,
+    rgba(0, 104, 71, 0.1) 100%
+  );
+  background-size: 400% 400%;
+  animation: mexicoGradient 15s ease infinite;
+}
+
+/* Glow animation for Mexico theme */
+@keyframes mexicoGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 104, 71, 0.3),
+                0 0 40px rgba(206, 17, 38, 0.2),
+                0 0 60px rgba(255, 215, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 104, 71, 0.5),
+                0 0 60px rgba(206, 17, 38, 0.3),
+                0 0 90px rgba(255, 215, 0, 0.2);
+  }
+}
+
+.mexico-glow {
+  animation: mexicoGlow 3s ease-in-out infinite;
+}
+
+/* Tech-inspired slide in from different directions */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-in-down {
+  animation: slideInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger animation for cards */
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-stagger {
+  animation: staggerFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  /* Prevent layout shift during animation */
+  min-height: 0;
+  will-change: opacity, transform;
+}
+
+/* Pulse animation for interactive elements */
+@keyframes techPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.animate-tech-pulse {
+  animation: techPulse 2s ease-in-out infinite;
+}
+
+/* Shimmer effect for Mexico theme */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.mexico-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Rotate gradient text */
+@keyframes rotateGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.mexico-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #006847 0%,
+    #FFFFFF 25%,
+    #CE1126 50%,
+    #FFFFFF 75%,
+    #006847 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rotateGradient 5s linear infinite;
+}
+
+/* Hover scale with glow */
+.hover-scale-glow {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale-glow:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 104, 71, 0.4),
+              0 0 60px rgba(206, 17, 38, 0.3);
+}
+
+/* Border glow on hover */
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 104, 71, 0.2);
+  }
+  50% {
+    border-color: rgba(0, 104, 71, 0.6);
+    box-shadow: 0 0 20px rgba(0, 104, 71, 0.4),
+                0 0 30px rgba(206, 17, 38, 0.3);
+  }
+}
+
+.hover-border-glow:hover {
+  animation: borderGlow 2s ease-in-out infinite;
+}
+
+/* Page transition */
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: pageFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Loading spinner - Mexico colors */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mexico-spinner {
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #006847;
+  border-right-color: #CE1126;
+  border-bottom-color: #FFD700;
+  animation: spin 1s linear infinite;
+}
+
+/* Page transition animations for navigation */
+@keyframes pageSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.95);
+  }
+}
+
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes cardClick {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.card-click-animation {
+  animation: cardClick 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ripple effect for card clicks */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple-effect:active::before {
+  width: 300px;
+  height: 300px;
+  animation: ripple 0.6s ease-out;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, transform, opacity, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
