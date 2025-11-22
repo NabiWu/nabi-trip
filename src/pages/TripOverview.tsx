@@ -26,51 +26,57 @@ export function TripOverview() {
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-5xl safe-area-top safe-area-bottom">
-      <Link to="/" className="inline-flex items-center text-slate-300 hover:text-white mb-6 transition-colors">
-        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <Link 
+        to="/" 
+        className="inline-flex items-center text-slate-400 hover:text-white mb-8 transition-colors text-sm font-medium"
+      >
+        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
         </svg>
         返回主页
       </Link>
 
-      <header className="mb-8 md:mb-12 page-enter">
-        <div className="bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-blue-500/20 backdrop-blur-lg rounded-3xl p-6 md:p-8 border-2 border-white/30 mexico-enhanced-gradient mexico-architectural-shadow hover-border-glow relative overflow-hidden group mexico-decorative-border mexico-cultural-glow">
-          {/* Animated background overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-green-500/0 via-white/5 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <div className="mexico-shimmer absolute inset-0 pointer-events-none"></div>
-          
-          <div className="relative z-10">
-            {/* Header with emoji and title */}
-            <div className="flex items-start justify-between mb-4 md:mb-6">
-              <div className="flex-1">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 mexico-title mexico-flag-text animate-tech-pulse">
-                  {trip.emoji} {trip.name}
-                </h1>
-                <p className="text-lg md:text-xl text-slate-200 mb-4 font-medium mexico-subtitle">{trip.description}</p>
-              </div>
+      <header className="mb-12 md:mb-16">
+        {/* Hero Section */}
+        <div className="bg-black/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/[0.2] mb-8 transition-all duration-500 hover:border-white/[0.3]">
+          {/* Header with large emoji */}
+          <div className="relative h-64 md:h-80 bg-gradient-to-br from-slate-800/30 via-slate-900/20 to-slate-800/30 flex items-center justify-center overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <span className="text-9xl md:text-[12rem] relative z-10 filter drop-shadow-2xl">{trip.emoji}</span>
+          </div>
+
+          {/* Content */}
+          <div className="p-6 md:p-8">
+            <div className="mb-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-light mb-3 text-white tracking-tight">
+                {trip.name}
+              </h1>
+              <p className="text-lg md:text-xl text-slate-400 leading-relaxed mb-6">
+                {trip.description}
+              </p>
             </div>
 
-            {/* Current Date and Weather Info */}
+            {/* Info Cards */}
             {(currentDate || weather) && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-4 md:mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 {currentDate && (
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-white/20">
+                  <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-4 border border-white/[0.2]">
                     <div className="flex items-center gap-3">
-                      <div className="text-2xl md:text-3xl animate-float">📅</div>
+                      <div className="text-2xl">📅</div>
                       <div>
-                        <div className="text-xs text-slate-400 mb-1">当前日期</div>
-                        <div className="text-sm md:text-base font-semibold text-white">{currentDate}</div>
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">当前日期</div>
+                        <div className="text-base font-medium text-white">{currentDate}</div>
                       </div>
                     </div>
                   </div>
                 )}
                 {weather && (
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-white/20">
+                  <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-4 border border-white/[0.2]">
                     <div className="flex items-center gap-3">
-                      <div className="text-2xl md:text-3xl animate-float" style={{ animationDelay: '0.2s' }}>{weather.icon}</div>
+                      <div className="text-2xl">{weather.icon}</div>
                       <div>
-                        <div className="text-xs text-slate-400 mb-1">当前天气</div>
-                        <div className="text-sm md:text-base font-semibold text-white">
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">当前天气</div>
+                        <div className="text-base font-medium text-white">
                           {weather.temperature}°C · {weather.description}
                         </div>
                       </div>
@@ -80,20 +86,27 @@ export function TripOverview() {
               </div>
             )}
 
-            {/* Trip badges */}
-            <div className="flex flex-wrap gap-2 md:gap-3 mb-4">
-              <span className="text-xs md:text-sm bg-purple-500/30 text-purple-200 px-3 md:px-4 py-1.5 md:py-2 rounded-full font-medium border border-purple-400/30">{trip.dateRange}</span>
-              <span className="text-xs md:text-sm bg-blue-500/30 text-blue-200 px-3 md:px-4 py-1.5 md:py-2 rounded-full font-medium border border-blue-400/30">{trip.duration}</span>
-              <span className="text-xs md:text-sm bg-pink-500/30 text-pink-200 px-3 md:px-4 py-1.5 md:py-2 rounded-full font-medium border border-pink-400/30">{trip.tags.join(' / ')}</span>
+            {/* Trip metadata */}
+            <div className="flex flex-wrap gap-3 mb-4">
+              <span className="text-xs text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
+                {trip.dateRange}
+              </span>
+              <span className="text-xs text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
+                {trip.duration}
+              </span>
+              {trip.tags.slice(0, 2).map((tag, idx) => (
+                <span key={idx} className="text-xs text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
+                  {tag}
+                </span>
+              ))}
             </div>
-            <p className="text-slate-300 text-xs md:text-sm">点击下方日期卡片查看当天的详细行程</p>
           </div>
         </div>
 
         <TodayButton trip={trip} />
       </header>
 
-      <main className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      <main className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {trip.days.map((day, index) => (
           <DayCard
             key={day.day}
@@ -104,8 +117,8 @@ export function TripOverview() {
         ))}
       </main>
 
-      <footer className="text-center text-slate-400 text-sm mt-12 mb-8">
-        <p>最后更新：2025 年 · 点击日期卡片查看当天的详细行程</p>
+      <footer className="text-center text-slate-500 text-sm mt-16 mb-8">
+        <p>点击日期卡片查看当天的详细行程</p>
       </footer>
     </div>
   );

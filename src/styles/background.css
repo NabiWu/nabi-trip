@@ -1,41 +1,18 @@
 /* Modern Mexico-inspired background */
 
-/* Main background with animated gradient and optional image */
+/* Modern elegant dark background - inspired by premium travel sites */
 .mexico-background {
-  /* Base animated gradient */
-  background: linear-gradient(
-    135deg,
-    #0f172a 0%,
-    #1e1b4b 25%,
-    #312e81 50%,
-    #1e1b4b 75%,
-    #0f172a 100%
-  );
-  background-size: 400% 400%;
-  background-position: 0% 50%;
-  animation: backgroundShift 20s ease infinite;
+  /* Sophisticated dark gradient as fallback */
+  background: #000000;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(120, 120, 120, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(120, 120, 120, 0.03) 0px, transparent 50%),
+    linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
   position: relative;
   min-height: 100vh;
-  /* Optional: Add a subtle texture overlay */
-  background-image: 
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 255, 255, 0.01) 2px,
-      rgba(255, 255, 255, 0.01) 4px
-    ),
-    linear-gradient(
-      135deg,
-      #0f172a 0%,
-      #1e1b4b 25%,
-      #312e81 50%,
-      #1e1b4b 75%,
-      #0f172a 100%
-    );
 }
 
-/* Optional: Add a background image overlay (uncomment image URL to use) */
+/* Dynamic background image overlay */
 .mexico-background::before {
   content: '';
   position: fixed;
@@ -45,18 +22,44 @@
   bottom: 0;
   /* Dark overlay to ensure text readability */
   background: 
-    /* Uncomment the line below and add your own Mexico-themed image URL */
-    /* url('https://images.unsplash.com/photo-1532980400857-e8d9d275d858?q=80&w=2000&auto=format&fit=crop'), */
     linear-gradient(
-      rgba(15, 23, 42, 0.75),
-      rgba(30, 27, 75, 0.85)
+      rgba(0, 0, 0, 0.75),
+      rgba(0, 0, 0, 0.85)
+    );
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease-in-out;
+}
+
+/* Dynamic background image - set via CSS variable */
+.mexico-background[data-bg-image]::before {
+  background-image: 
+    var(--bg-image, none),
+    linear-gradient(
+      rgba(0, 0, 0, 0.92),
+      rgba(0, 0, 0, 0.98)
     );
   background-size: cover, cover;
   background-position: center, center;
   background-attachment: fixed, fixed;
-  opacity: 0.6;
-  z-index: 0;
-  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* Smooth transition when background changes */
+.mexico-background[data-bg-image]::before {
+  animation: fadeInBackground 0.8s ease-in-out;
+}
+
+@keyframes fadeInBackground {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.9;
+  }
 }
 
 @keyframes backgroundShift {
@@ -68,7 +71,7 @@
   }
 }
 
-/* Animated overlay with Mexico colors */
+/* Elegant subtle overlay */
 .mexico-background::after {
   content: '';
   position: fixed;
@@ -77,12 +80,11 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 20% 50%, rgba(0, 104, 71, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(206, 17, 38, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.015) 0%, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.015) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
-  animation: overlayPulse 15s ease-in-out infinite;
+  opacity: 0.6;
 }
 
 @keyframes overlayPulse {
@@ -98,42 +100,42 @@
 
 /* Subtle pattern overlay - moved to main background */
 
-/* Floating orbs for depth */
+/* Subtle ambient orbs - minimal design */
 .mexico-background .floating-orb {
   position: fixed;
   border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.3;
+  filter: blur(80px);
+  opacity: 0.15;
   pointer-events: none;
   z-index: 0;
-  animation: floatOrb 20s ease-in-out infinite;
+  animation: floatOrb 30s ease-in-out infinite;
 }
 
 .mexico-background .orb-1 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(0, 104, 71, 0.4), transparent);
-  top: -200px;
-  left: -200px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(200, 200, 200, 0.1), transparent);
+  top: -250px;
+  left: -250px;
   animation-delay: 0s;
 }
 
 .mexico-background .orb-2 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(206, 17, 38, 0.4), transparent);
-  bottom: -250px;
-  right: -250px;
-  animation-delay: 5s;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(180, 180, 180, 0.08), transparent);
+  bottom: -300px;
+  right: -300px;
+  animation-delay: 10s;
 }
 
 .mexico-background .orb-3 {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(220, 220, 220, 0.06), transparent);
   top: 50%;
   right: 10%;
-  animation-delay: 10s;
+  animation-delay: 20s;
 }
 
 @keyframes floatOrb {
@@ -141,10 +143,10 @@
     transform: translate(0, 0) scale(1);
   }
   33% {
-    transform: translate(30px, -30px) scale(1.1);
+    transform: translate(40px, -40px) scale(1.05);
   }
   66% {
-    transform: translate(-20px, 20px) scale(0.9);
+    transform: translate(-30px, 30px) scale(0.95);
   }
 }
 

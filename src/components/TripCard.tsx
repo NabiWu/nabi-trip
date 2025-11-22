@@ -27,47 +27,70 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
     <Link
       to={`/trips/${trip.id}`}
       onClick={handleClick}
-      className="group animate-stagger h-full ripple-effect"
+      className="group block animate-stagger h-full"
       style={{ animationDelay: `${animationDelay}s` }}
     >
-      <div className="card-hover bg-gradient-to-br from-white/10 via-white/5 to-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/20 active:scale-95 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 relative overflow-hidden">
-        {/* Hover glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-blue-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-blue-500/10 transition-all duration-300"></div>
-        
-        {/* Shimmer effect on hover */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-        
-        <div className="relative z-10">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-5xl md:text-6xl transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">{trip.emoji}</span>
-            <div className="flex items-center gap-2">
-              <span className={`text-xs px-3 py-1.5 rounded-full font-bold border ${statusColor} border-opacity-30 group-hover:border-opacity-50 transition-colors`}>
-                {status.status === 'active' ? '进行中' : status.status === 'upcoming' ? '即将开始' : '已结束'}
-              </span>
-              <span className="text-xs text-slate-300 bg-slate-800/50 px-3 py-1.5 rounded-full border border-slate-700/50">
-                {trip.dateRange.split(' – ')[0].split('/')[0]}/{trip.dateRange.split(' – ')[0].split('/')[1]}
-              </span>
-            </div>
-          </div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 group-hover:text-purple-300 transition-colors mexico-gradient-text">
+      <div className="bg-black/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/[0.2] h-full flex flex-col transition-all duration-500 hover:border-white/[0.3] hover:shadow-2xl hover:shadow-black/50 hover:-translate-y-1">
+        {/* Image/Emoji Header */}
+        <div className="relative h-48 bg-gradient-to-br from-slate-800/50 via-slate-900/30 to-slate-800/50 flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+          <span className="text-7xl md:text-8xl relative z-10 filter drop-shadow-lg">{trip.emoji}</span>
+          {/* Status badge - top right */}
+          <span className={`absolute top-4 right-4 text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-md ${statusColor} border border-white/20 shadow-lg z-20`}>
+            {status.status === 'active' ? '进行中' : status.status === 'upcoming' ? '即将开始' : '已结束'}
+          </span>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 flex-1 flex flex-col">
+          {/* Trip name */}
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-white leading-tight">
             {trip.name}
           </h2>
-          <p className="text-slate-200 text-sm md:text-base mb-4 flex-grow font-medium group-hover:text-white transition-colors">
-            {trip.description}<br />
-            {trip.duration} · {trip.tags.join(' / ')}
+
+          {/* Description */}
+          <p className="text-slate-400 text-sm md:text-base mb-5 flex-grow line-clamp-2 leading-relaxed">
+            {trip.description}
           </p>
-          <div className="flex flex-wrap gap-2 mb-4">
-            {trip.tags.map((tag, idx) => (
-              <span key={idx} className="text-xs bg-purple-500/30 text-purple-200 px-2.5 py-1 rounded-lg border border-purple-400/30">
+
+          {/* Divider */}
+          <div className="h-px bg-white/10 mb-5"></div>
+
+          {/* Info row */}
+          <div className="flex items-center justify-between text-xs text-slate-500 mb-5">
+            <div className="flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{trip.duration}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>{trip.dateRange.split(' – ')[0].split('/')[0]}/{trip.dateRange.split(' – ')[0].split('/')[1]}</span>
+            </div>
+          </div>
+
+          {/* Tags - minimal design */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            {trip.tags.slice(0, 3).map((tag, idx) => (
+              <span key={idx} className="text-xs text-slate-400 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08]">
                 {tag}
               </span>
             ))}
           </div>
-          <div className="flex items-center text-sm md:text-base text-slate-300 group-hover:text-purple-300 transition-colors font-medium">
-            <span>查看详情</span>
-            <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-            </svg>
+
+          {/* Bottom CTA */}
+          <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/[0.05]">
+            <span className="text-sm text-slate-400 group-hover:text-white transition-colors font-medium">
+              查看详情
+            </span>
+            <div className="w-8 h-8 rounded-full bg-white/[0.05] group-hover:bg-white/[0.1] flex items-center justify-center transition-all group-hover:translate-x-1">
+              <svg className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
