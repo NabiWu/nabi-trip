@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { getAllTrips } from '../data/trips';
 import { getTripStatus } from '../utils/dateUtils';
+import { classNames } from '../utils/classNames';
+import { typography, ui } from '../constants';
 
 export function BottomNavigation() {
   const location = useLocation();
@@ -42,20 +44,35 @@ export function BottomNavigation() {
 
   // Only show on mobile
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-t border-white/[0.1] safe-area-bottom md:hidden">
-      <div className="flex items-center justify-around px-1 py-1.5">
+    <nav 
+      className={classNames(
+        'fixed bottom-0 left-0 right-0 md:hidden',
+        'bg-black/95 backdrop-blur-xl',
+        ui.border.default,
+        'z-50'
+      )}
+      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+    >
+      <div className={classNames('flex items-center justify-around px-2', ui.bottomNav.padding.container)}>
         {navItems.map((item) => (
           <Link
             key={item.path}
             to={item.path}
-            className={`flex flex-col items-center justify-center gap-0.5 px-3 py-1.5 rounded-lg transition-all min-w-[60px] ${
+            className={classNames(
+              'flex flex-col items-center justify-center gap-0.5 rounded-lg min-w-[60px]',
+              ui.bottomNav.padding.item,
+              ui.transition.default,
               item.active
-                ? 'bg-white/[0.1] text-white'
+                ? 'bg-white/[0.08] text-white'
                 : 'text-slate-400 active:text-slate-200'
-            }`}
+            )}
           >
-            <span className="text-xl leading-none">{item.icon}</span>
-            <span className="text-[10px] font-medium leading-tight">{item.label}</span>
+            <span className={classNames(typography.sizes.nav.icon, 'leading-none')}>
+              {item.icon}
+            </span>
+            <span className={classNames(typography.sizes.nav.label, typography.weights.medium, typography.lineHeights.tight)}>
+              {item.label}
+            </span>
           </Link>
         ))}
       </div>

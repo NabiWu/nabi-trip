@@ -44,7 +44,7 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
           <div className="absolute inset-0 bg-black/30"></div>
           <span className="text-7xl md:text-8xl relative z-10 filter drop-shadow-2xl">{trip.emoji}</span>
           {/* Status badge - top right */}
-          <span className={`absolute top-4 right-4 text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-md ${statusColor} border border-white/20 shadow-lg z-20`}>
+          <span className={`absolute top-4 right-4 text-base px-4 py-2 rounded-full font-medium backdrop-blur-md ${statusColor} border border-white/20 shadow-lg z-20`}>
             {status.status === 'active' ? '进行中' : status.status === 'upcoming' ? '即将开始' : '已结束'}
           </span>
         </div>
@@ -52,12 +52,12 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
         {/* Content */}
         <div className="p-6 flex-1 flex flex-col">
           {/* Trip name */}
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-white leading-tight">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3 text-white leading-tight">
             {trip.name}
           </h2>
 
           {/* Description */}
-          <p className="text-slate-400 text-sm md:text-base mb-5 flex-grow line-clamp-2 leading-relaxed">
+          <p className="text-slate-400 text-base md:text-lg mb-5 flex-grow line-clamp-2 leading-relaxed">
             {trip.description}
           </p>
 
@@ -65,7 +65,7 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
           <div className="h-px bg-white/10 mb-5"></div>
 
           {/* Info row */}
-          <div className="flex items-center justify-between text-xs text-slate-500 mb-5">
+          <div className="flex items-center justify-between text-base text-slate-500 mb-5">
             <div className="flex items-center gap-2">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -83,7 +83,7 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
           {/* Tags - minimal design */}
           <div className="flex flex-wrap gap-2 mb-6">
             {trip.tags.slice(0, 3).map((tag, idx) => (
-              <span key={idx} className="text-xs text-slate-400 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08]">
+              <span key={idx} className="text-base text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
                 {tag}
               </span>
             ))}
@@ -91,7 +91,7 @@ export function TripCard({ trip, animationDelay = 0 }: TripCardProps) {
 
           {/* Bottom CTA */}
           <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/[0.05]">
-            <span className="text-sm text-slate-400 group-hover:text-white transition-colors font-medium">
+            <span className="text-base text-slate-400 group-hover:text-white transition-colors font-medium">
               查看详情
             </span>
             <div className="w-8 h-8 rounded-full bg-white/[0.05] group-hover:bg-white/[0.1] flex items-center justify-center transition-all group-hover:translate-x-1">

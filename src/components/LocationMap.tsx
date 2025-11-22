@@ -87,7 +87,7 @@ export function LocationMap({ location, label: _label }: LocationMapProps) {
               src={embedUrl}
             ></iframe>
           </div>
-          <div className="bg-white/5 px-3 py-2 text-xs text-slate-400 text-center">
+          <div className="bg-white/5 px-3 py-2 text-sm text-slate-400 text-center">
             <a
               href={location.mapsUrl}
               target="_blank"
@@ -160,7 +160,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
         </svg>
         <span>{isOpen ? '隐藏地图' : '查看地图'}</span>
         {validLocations.length > 1 && (
-          <span className="text-xs text-slate-400">({validLocations.length} 个地点)</span>
+          <span className="text-sm text-slate-400">({validLocations.length} 个地点)</span>
         )}
       </button>
 
@@ -169,7 +169,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
           {/* Location selector - choose which location to display */}
           {validLocations.length > 1 && (
             <div className="bg-white/5 px-3 md:px-4 py-2 md:py-3 border-b border-white/10">
-              <div className="text-xs text-slate-300 font-semibold mb-2">选择要查看的地点：</div>
+              <div className="text-sm text-slate-300 font-semibold mb-2">选择要查看的地点：</div>
               <div className="flex flex-wrap gap-2">
                 {validLocations.map((loc, idx) => {
                   const name = loc.name || extractLocationName(loc.mapsUrl);
@@ -178,7 +178,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
                     <button
                       key={idx}
                       onClick={() => setSelectedIndex(idx)}
-                      className={`px-2 md:px-3 py-1.5 md:py-2 rounded-lg text-xs transition-all border min-h-[36px] md:min-h-[44px] flex items-center ${
+                      className={`px-2 md:px-3 py-1.5 md:py-2 rounded-lg text-sm transition-all border min-h-[36px] md:min-h-[44px] flex items-center ${
                         isSelected
                           ? 'bg-purple-500/30 text-purple-200 border-purple-400/50'
                           : 'bg-white/5 text-slate-300 border-white/10 active:bg-white/10'
@@ -208,7 +208,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
 
           {/* Footer with links */}
           <div className="bg-white/5 px-3 md:px-4 py-2 md:py-3">
-            <div className="text-xs text-slate-400">
+            <div className="text-sm text-slate-400">
               <div className="mb-2">
                 <span className="text-slate-300 font-semibold">当前查看：</span>
                 <a
@@ -227,7 +227,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
                       href={generateAllLocationsLink()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 px-3 py-2 md:py-1.5 bg-blue-500/20 active:bg-blue-500/30 text-blue-200 rounded-lg border border-blue-400/30 transition-all text-xs font-medium min-h-[44px]"
+                      className="inline-flex items-center gap-1 px-3 py-2 md:py-1.5 bg-blue-500/20 active:bg-blue-500/30 text-blue-200 rounded-lg border border-blue-400/30 transition-all text-sm font-medium min-h-[44px]"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
@@ -246,7 +246,7 @@ export function MultiLocationMap({ locations, title: _title }: MultiLocationMapP
                             href={loc.mapsUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300 underline text-xs"
+                            className="text-blue-400 hover:text-blue-300 underline text-sm"
                           >
                             {name}
                           </a>
