@@ -32,7 +32,7 @@ export function CurrentInfo() {
               <div className="text-3xl md:text-4xl animate-float" style={{ animationDelay: '0s' }}>📅</div>
               <div className="flex-1">
                 <div className="text-xs text-green-300/80 mb-2 font-medium uppercase tracking-wider">当前日期</div>
-                <div className="text-lg md:text-xl font-bold text-white mexico-gradient-text">{date}</div>
+                <div className="text-lg md:text-xl font-bold text-white">{date}</div>
               </div>
             </div>
             <div className="h-1 bg-gradient-to-r from-green-500/50 via-emerald-400/50 to-teal-400/50 rounded-full"></div>
