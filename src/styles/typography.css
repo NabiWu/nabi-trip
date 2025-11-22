@@ -1,0 +1,43 @@
+/**
+ * Global typography styles
+ * These complement the Tailwind typography utilities
+ */
+
+@layer base {
+  /* Base font settings */
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  body {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Chinese text uses Noto Sans SC */
+  [lang="zh-CN"],
+  .chinese {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
+  }
+  
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  
+  /* Better default link styles */
+  a {
+    transition: color 0.2s ease;
+  }
+  
+  /* Better default button styles */
+  button {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
+

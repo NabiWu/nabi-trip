@@ -57,8 +57,8 @@ export function DayDetail() {
     return (
       <div className="container mx-auto px-4 py-6 md:py-8 max-w-4xl safe-area-top safe-area-bottom">
         <div className="text-center text-slate-300">
-          <p>未找到该旅行计划</p>
-          <Link to="/" className="text-blue-400 hover:text-blue-300 mt-4 inline-block">
+          <p className="text-lg">未找到该旅行计划</p>
+          <Link to="/" className="text-blue-400 hover:text-blue-300 mt-4 inline-block text-base">
             返回主页
           </Link>
         </div>
@@ -71,15 +71,15 @@ export function DayDetail() {
     return (
       <div className="container mx-auto px-4 py-6 md:py-8 max-w-4xl safe-area-top safe-area-bottom">
         <div className="text-center text-slate-300">
-          <p>未找到该日期信息</p>
-          <p className="text-sm text-slate-500 mt-2">
+          <p className="text-lg">未找到该日期信息</p>
+          <p className="text-base text-slate-500 mt-2">
             Day {dayNumber} 不存在，共有 {trip.days.length} 天
           </p>
           <div className="flex gap-3 justify-center mt-4">
-            <Link to={`/trips/${tripId}`} className="text-blue-400 hover:text-blue-300">
+            <Link to={`/trips/${tripId}`} className="text-blue-400 hover:text-blue-300 text-base">
               返回总览
             </Link>
-            <Link to={`/trips/${tripId}/day/1`} className="text-blue-400 hover:text-blue-300">
+            <Link to={`/trips/${tripId}/day/1`} className="text-blue-400 hover:text-blue-300 text-base">
               查看第一天
             </Link>
           </div>
@@ -125,7 +125,7 @@ export function DayDetail() {
       <div className="mb-6 md:mb-8">
         <Link 
           to={`/trips/${tripId}`} 
-          className="inline-flex items-center text-slate-400 hover:text-white active:text-slate-200 transition-colors text-sm font-medium min-h-[44px]"
+          className="inline-flex items-center text-slate-400 hover:text-white active:text-slate-200 transition-colors text-base font-medium min-h-[44px]"
         >
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -136,7 +136,7 @@ export function DayDetail() {
       
       {/* Swipe hint for mobile */}
       <div className="md:hidden mb-4 text-center">
-        <p className="text-xs text-slate-500">左右滑动切换日期</p>
+        <p className="text-base text-slate-500">左右滑动切换日期</p>
       </div>
 
       {/* Back to Today Button - Only show if not on today */}
@@ -144,7 +144,7 @@ export function DayDetail() {
         <div className="mb-6 animate-fade-in">
           <Link
             to={`/trips/${tripId}/day/${tripStatus.currentDay}`}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-300 rounded-xl border border-green-500/30 transition-all text-sm font-medium"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-300 rounded-xl border border-green-500/30 transition-all text-base font-medium"
           >
             <span>🎉</span>
             <span>回到今天 (Day {tripStatus.currentDay})</span>
@@ -157,7 +157,7 @@ export function DayDetail() {
         <div className="relative h-48 md:h-64 bg-gradient-to-br from-slate-800/30 via-slate-900/20 to-slate-800/30 flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
           <div className="absolute top-6 left-6">
-            <div className="text-xs text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] backdrop-blur-md">
+            <div className="text-base text-slate-400 px-4 py-2 rounded-full bg-white/[0.05] border border-white/[0.08] backdrop-blur-md">
               Day {day.day} · {day.badge}
             </div>
           </div>
@@ -168,10 +168,10 @@ export function DayDetail() {
           <div className="mb-6 md:mb-8">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1">
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-light mb-2 md:mb-3 text-white tracking-tight">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-light mb-3 md:mb-4 text-white tracking-tight">
                   {formatDateDisplay(day.date)}
                 </h1>
-                <h2 className="text-base md:text-lg lg:text-xl text-slate-200 leading-relaxed">
+                <h2 className="text-lg md:text-xl lg:text-2xl text-slate-200 leading-relaxed">
                   {day.title}
                 </h2>
               </div>
@@ -204,8 +204,8 @@ export function DayDetail() {
               <div className="flex items-start gap-3 p-4 bg-black/60 rounded-2xl border border-white/[0.2]">
                 <span className="text-2xl">🏨</span>
                 <div className="flex-1">
-                  <div className="text-xs text-slate-200 mb-1 uppercase tracking-wider">住宿</div>
-                  <div className="text-base font-medium text-white">{day.accommodation}</div>
+                  <div className="text-base text-slate-200 mb-2 uppercase tracking-wider">住宿</div>
+                  <div className="text-lg font-medium text-white">{day.accommodation}</div>
                 </div>
               </div>
             )}
@@ -216,9 +216,9 @@ export function DayDetail() {
             <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
               <div className="flex items-center gap-3 mb-3 md:mb-4">
                 <span className="text-xl md:text-2xl">{day.transport.type.split(' ')[0]}</span>
-                <h3 className="text-xs md:text-sm font-semibold text-white uppercase tracking-wider">交通</h3>
+                <h3 className="text-base md:text-lg font-semibold text-white uppercase tracking-wider">交通</h3>
               </div>
-              <div className="text-slate-200 text-xs md:text-sm leading-relaxed space-y-2">
+              <div className="text-slate-200 text-base md:text-lg leading-relaxed space-y-2">
                 {day.transport.details && <p>{day.transport.details}</p>}
                 {day.transport.departure && (
                   <p className="flex items-start gap-2">
@@ -243,9 +243,9 @@ export function DayDetail() {
               <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
                 <div className="flex items-center gap-3 mb-3 md:mb-4">
                   <span className="text-xl md:text-2xl">🏨</span>
-                  <h3 className="text-xs md:text-sm font-semibold text-white uppercase tracking-wider">住宿</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-white uppercase tracking-wider">住宿</h3>
                 </div>
-                <div className="text-slate-200 text-sm mb-4">
+                <div className="text-slate-200 text-base mb-4">
                   <a
                     href={day.accommodationLink}
                     target="_blank"
@@ -267,9 +267,9 @@ export function DayDetail() {
               <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
                 <div className="flex items-center gap-3 mb-3 md:mb-4">
                   <span className="text-xl md:text-2xl">📍</span>
-                  <h3 className="text-xs md:text-sm font-semibold text-white uppercase tracking-wider">关键景点</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-white uppercase tracking-wider">关键景点</h3>
                 </div>
-                <div className="text-slate-200 text-xs md:text-sm mb-3 md:mb-4 leading-relaxed">
+                <div className="text-slate-200 text-base md:text-lg mb-3 md:mb-4 leading-relaxed">
                   {day.attractions.map((item, idx) => (
                     <span key={idx}>
                       {renderLocation(item)}
@@ -286,9 +286,9 @@ export function DayDetail() {
               <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
                 <div className="flex items-center gap-3 mb-3 md:mb-4">
                   <span className="text-xl md:text-2xl">🍽️</span>
-                  <h3 className="text-xs md:text-sm font-semibold text-white uppercase tracking-wider">餐饮建议</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-white uppercase tracking-wider">餐饮建议</h3>
                 </div>
-                <div className="text-slate-200 text-xs md:text-sm mb-3 md:mb-4 leading-relaxed">
+                <div className="text-slate-200 text-base md:text-lg mb-3 md:mb-4 leading-relaxed">
                   {day.dining.map((item, idx) => (
                     <span key={idx}>
                       {renderLocation(item)}
@@ -306,8 +306,8 @@ export function DayDetail() {
                 <div className="flex items-start gap-2 md:gap-3">
                   <span className="text-lg md:text-xl">💡</span>
                   <div className="flex-1">
-                    <div className="text-xs text-slate-200 mb-1 uppercase tracking-wider">备注</div>
-                    <p className="text-white text-xs md:text-sm leading-relaxed">{day.note}</p>
+                    <div className="text-base text-slate-200 mb-2 uppercase tracking-wider">备注</div>
+                    <p className="text-white text-base md:text-lg leading-relaxed">{day.note}</p>
                   </div>
                 </div>
               </div>
@@ -320,8 +320,8 @@ export function DayDetail() {
         {prevDayValid && (
           <Link
             to={`/trips/${tripId}/day/${prevDay}`}
-            className="flex-1 sm:flex-none px-5 py-3 bg-black/30 hover:bg-black/50 rounded-2xl border border-white/[0.12] hover:border-white/[0.2] transition-all duration-300 text-sm text-center font-medium text-white hover:text-white flex items-center justify-center gap-2"
-          >
+            className="flex-1 sm:flex-none px-5 py-3 bg-black/30 hover:bg-black/50 rounded-2xl border border-white/[0.12] hover:border-white/[0.2] transition-all duration-300 text-base text-center font-medium text-white hover:text-white flex items-center justify-center gap-2"
+            >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
             </svg>
@@ -330,14 +330,14 @@ export function DayDetail() {
         )}
         <Link
           to={`/trips/${tripId}`}
-          className="flex-1 sm:flex-none px-5 py-3 bg-white/[0.02] hover:bg-white/[0.05] rounded-2xl border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300 text-sm text-center font-medium text-slate-300 hover:text-white flex items-center justify-center"
+          className="flex-1 sm:flex-none px-5 py-3 bg-white/[0.02] hover:bg-white/[0.05] rounded-2xl border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300 text-base text-center font-medium text-slate-300 hover:text-white flex items-center justify-center"
         >
           返回总览
         </Link>
         {nextDayValid && (
           <Link
             to={`/trips/${tripId}/day/${nextDay}`}
-            className="flex-1 sm:flex-none px-5 py-3 bg-black/30 hover:bg-black/50 rounded-2xl border border-white/[0.12] hover:border-white/[0.2] transition-all duration-300 text-sm text-center font-medium text-white hover:text-white flex items-center justify-center gap-2"
+            className="flex-1 sm:flex-none px-5 py-3 bg-black/30 hover:bg-black/50 rounded-2xl border border-white/[0.12] hover:border-white/[0.2] transition-all duration-300 text-base text-center font-medium text-white hover:text-white flex items-center justify-center gap-2"
           >
             Day {nextDay}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

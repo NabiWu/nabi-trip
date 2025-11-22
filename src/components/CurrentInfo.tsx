@@ -11,7 +11,7 @@ export function CurrentInfo() {
         <div className="bg-gradient-to-br from-purple-500/20 via-blue-500/20 to-pink-500/20 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-white/20 mexico-gradient-bg">
           <div className="flex items-center justify-center gap-3">
             <div className="mexico-spinner w-6 h-6 border-3"></div>
-            <span className="text-slate-200 text-sm md:text-base font-medium">正在加载实时信息...</span>
+            <span className="text-slate-200 text-base md:text-lg font-medium">正在加载实时信息...</span>
           </div>
         </div>
       </div>
@@ -31,8 +31,8 @@ export function CurrentInfo() {
             <div className="flex items-center gap-4 mb-3">
               <div className="text-3xl md:text-4xl animate-float" style={{ animationDelay: '0s' }}>📅</div>
               <div className="flex-1">
-                <div className="text-xs text-green-300/80 mb-2 font-medium uppercase tracking-wider">当前日期</div>
-                <div className="text-lg md:text-xl font-bold text-white">{date}</div>
+                <div className="text-base text-green-300/80 mb-2 font-medium uppercase tracking-wider">当前日期</div>
+                <div className="text-xl md:text-2xl font-bold text-white">{date}</div>
               </div>
             </div>
             <div className="h-1 bg-gradient-to-r from-green-500/50 via-emerald-400/50 to-teal-400/50 rounded-full"></div>
@@ -50,11 +50,11 @@ export function CurrentInfo() {
               <div className="flex items-center gap-4 mb-3">
                 <div className="text-3xl md:text-4xl animate-float" style={{ animationDelay: '0.2s' }}>📍</div>
                 <div className="flex-1">
-                  <div className="text-xs text-blue-300/80 mb-2 font-medium uppercase tracking-wider">当前位置</div>
-                  <div className="text-lg md:text-xl font-bold text-white">
+                  <div className="text-base text-blue-300/80 mb-2 font-medium uppercase tracking-wider">当前位置</div>
+                  <div className="text-xl md:text-2xl font-bold text-white">
                     {location.city}
                     {location.country && location.country !== location.city && (
-                      <span className="text-blue-300/70 text-sm md:text-base ml-1 font-normal">, {location.country}</span>
+                      <span className="text-blue-300/70 text-base md:text-lg ml-1 font-normal">, {location.country}</span>
                     )}
                   </div>
                 </div>
@@ -70,7 +70,7 @@ export function CurrentInfo() {
             <div className="flex items-center gap-4">
               <div className="text-3xl md:text-4xl">📍</div>
               <div className="flex-1">
-                <div className="text-xs text-amber-300/80 mb-2 font-medium uppercase tracking-wider">当前位置</div>
+                <div className="text-sm text-amber-300/80 mb-2 font-medium uppercase tracking-wider">当前位置</div>
                 <div className="text-sm text-amber-300">需要位置权限</div>
               </div>
             </div>
@@ -88,11 +88,11 @@ export function CurrentInfo() {
               <div className="flex items-center gap-4 mb-3">
                 <div className="text-3xl md:text-4xl animate-float" style={{ animationDelay: '0.4s' }}>{weather.icon}</div>
                 <div className="flex-1">
-                  <div className="text-xs text-pink-300/80 mb-2 font-medium uppercase tracking-wider">当前天气</div>
-                  <div className="text-lg md:text-xl font-bold text-white">
-                    <span className="text-2xl md:text-3xl">{weather.temperature}</span>
-                    <span className="text-base md:text-lg text-pink-300/70">°C</span>
-                    <span className="text-sm md:text-base text-pink-300/60 ml-2 font-normal">· {weather.description}</span>
+                  <div className="text-base text-pink-300/80 mb-2 font-medium uppercase tracking-wider">当前天气</div>
+                  <div className="text-xl md:text-2xl font-bold text-white">
+                    <span className="text-3xl md:text-4xl">{weather.temperature}</span>
+                    <span className="text-lg md:text-xl text-pink-300/70">°C</span>
+                    <span className="text-base md:text-lg text-pink-300/60 ml-2 font-normal">· {weather.description}</span>
                   </div>
                 </div>
               </div>
@@ -107,7 +107,7 @@ export function CurrentInfo() {
             <div className="flex items-center gap-4">
               <div className="text-3xl md:text-4xl">🌤️</div>
               <div className="flex-1">
-                <div className="text-xs text-slate-300/80 mb-2 font-medium uppercase tracking-wider">当前天气</div>
+                <div className="text-sm text-slate-300/80 mb-2 font-medium uppercase tracking-wider">当前天气</div>
                 <div className="text-sm text-slate-300">天气信息不可用</div>
               </div>
             </div>
@@ -118,8 +118,8 @@ export function CurrentInfo() {
       {error && permissionStatus === 'denied' && (
         <div className="mt-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 backdrop-blur-sm">
-            <p className="text-xs text-amber-300 text-center flex items-center justify-center gap-2">
-              <span className="text-base">💡</span>
+            <p className="text-base text-amber-300 text-center flex items-center justify-center gap-2">
+              <span className="text-lg">💡</span>
               <span>提示：允许位置权限可以查看当前位置和天气信息</span>
             </p>
           </div>

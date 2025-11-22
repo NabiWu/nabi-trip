@@ -1,3 +1,5 @@
+/* Import all styles in order */
+@import './styles/typography.css';
 @import './styles/animations.css';
 @import './styles/mobile-optimizations.css';
 @import './styles/background.css';
@@ -93,7 +95,7 @@ body {
 /* Ensure content doesn't get hidden behind bottom nav on mobile */
 @media (max-width: 768px) {
   .safe-area-bottom {
-    padding-bottom: max(4rem, env(safe-area-inset-bottom, 0px) + 4rem);
+    padding-bottom: max(3rem, env(safe-area-inset-bottom, 0px) + 3rem);
   }
   
   /* Better scrolling on mobile */

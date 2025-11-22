@@ -43,17 +43,17 @@ export function DayCard({ tripId, day, animationDelay = 0 }: DayCardProps) {
           <div className="absolute inset-0 bg-black/30"></div>
           <span className="text-5xl md:text-6xl relative z-10 filter drop-shadow-2xl">{icon}</span>
           {/* Day badge */}
-          <div className="absolute top-4 right-4 text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-md bg-white/[0.15] text-white border border-white/30 shadow-lg z-20">
+          <div className="absolute top-4 right-4 text-base px-4 py-2 rounded-full font-medium backdrop-blur-md bg-white/[0.15] text-white border border-white/30 shadow-lg z-20">
             Day {day.day}
           </div>
         </div>
 
         {/* Content */}
         <div className="p-6 flex-1 flex flex-col">
-          <h3 className="text-xl md:text-2xl font-bold mb-2 text-white leading-tight">
+          <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white leading-tight">
             {formatDateDisplay(day.date)}
           </h3>
-          <p className="text-slate-400 text-sm md:text-base mb-4 flex-grow line-clamp-2 leading-relaxed">
+          <p className="text-slate-400 text-base md:text-lg mb-4 flex-grow line-clamp-2 leading-relaxed">
             {day.title}
           </p>
 
@@ -62,20 +62,20 @@ export function DayCard({ tripId, day, animationDelay = 0 }: DayCardProps) {
 
           {/* Badge */}
           <div className="mb-4">
-            <span className="text-xs text-slate-400 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08]">
+            <span className="text-base text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
               {day.badge}
             </span>
           </div>
 
           {/* Accommodation */}
-          <div className="flex items-center gap-2 text-xs text-slate-500 mb-4">
+          <div className="flex items-center gap-2 text-base text-slate-500 mb-4">
             <span>🏨</span>
             <span className="truncate">{day.accommodation}</span>
           </div>
 
           {/* Bottom CTA */}
           <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/[0.05]">
-            <span className="text-sm text-slate-400 group-hover:text-white transition-colors font-medium">
+            <span className="text-base text-slate-400 group-hover:text-white transition-colors font-medium">
               查看详情
             </span>
             <div className="w-8 h-8 rounded-full bg-white/[0.05] group-hover:bg-white/[0.1] flex items-center justify-center transition-all group-hover:translate-x-1">

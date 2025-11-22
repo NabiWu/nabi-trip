@@ -17,7 +17,7 @@ export function TripOverview() {
     return (
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         <div className="text-center text-slate-300">
-          <p>未找到该旅行计划</p>
+          <p className="text-lg">未找到该旅行计划</p>
         </div>
       </div>
     );
@@ -62,8 +62,8 @@ export function TripOverview() {
                     <div className="flex items-center gap-3">
                       <div className="text-2xl">📅</div>
                       <div>
-                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">当前日期</div>
-                        <div className="text-base font-medium text-white">{currentDate}</div>
+                        <div className="text-base text-slate-500 mb-1 uppercase tracking-wider">当前日期</div>
+                        <div className="text-lg font-medium text-white">{currentDate}</div>
                       </div>
                     </div>
                   </div>
@@ -73,8 +73,8 @@ export function TripOverview() {
                     <div className="flex items-center gap-3">
                       <div className="text-2xl">{weather.icon}</div>
                       <div>
-                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">当前天气</div>
-                        <div className="text-base font-medium text-white">
+                        <div className="text-base text-slate-500 mb-1 uppercase tracking-wider">当前天气</div>
+                        <div className="text-lg font-medium text-white">
                           {weather.temperature}°C · {weather.description}
                         </div>
                       </div>
@@ -86,14 +86,14 @@ export function TripOverview() {
 
             {/* Trip metadata */}
             <div className="flex flex-wrap gap-3 mb-4">
-              <span className="text-xs text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
+              <span className="text-base text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
                 {trip.dateRange}
               </span>
-              <span className="text-xs text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
+              <span className="text-base text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
                 {trip.duration}
               </span>
               {trip.tags.slice(0, 2).map((tag, idx) => (
-                <span key={idx} className="text-xs text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
+                <span key={idx} className="text-sm text-slate-400 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08]">
                   {tag}
                 </span>
               ))}
@@ -113,7 +113,7 @@ export function TripOverview() {
         ))}
       </main>
 
-      <footer className="text-center text-slate-500 text-sm mt-16 mb-20 md:mb-8">
+      <footer className="text-center text-slate-500 text-base mt-16 mb-20 md:mb-8">
         <p>点击日期卡片查看当天的详细行程</p>
       </footer>
     </div>

@@ -1,17 +1,20 @@
 import { TripCard } from '../components/TripCard';
 import { CurrentInfo } from '../components/CurrentInfo';
 import { getAllTrips } from '../data/trips';
+import { AnimatedCodeBackground } from '../components/AnimatedCodeBackground';
 
 export function Home() {
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl safe-area-top safe-area-bottom">
+    <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl safe-area-top safe-area-bottom relative z-10">
+      <AnimatedCodeBackground />
+      <div className="relative z-10">
       <header className="text-center mb-12 md:mb-16 animate-fade-in">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-light mb-6 text-white tracking-tight">
           Nabi & Grace's
           <br />
           <span className="font-normal">Travel Plans</span>
         </h1>
-        <p className="text-slate-400 text-base md:text-lg px-4 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-slate-400 text-lg md:text-xl px-4 max-w-2xl mx-auto leading-relaxed">
           我们的旅行计划集合
         </p>
       </header>
@@ -34,13 +37,14 @@ export function Home() {
           <div className="w-16 h-16 rounded-full bg-white/[0.05] border border-white/[0.10] flex items-center justify-center mb-4">
             <span className="text-2xl text-slate-400">➕</span>
           </div>
-          <p className="text-slate-400 text-sm text-center font-medium">更多旅行计划<br />即将到来</p>
+          <p className="text-slate-400 text-base text-center font-medium">更多旅行计划<br />即将到来</p>
         </div>
       </div>
 
-      <footer className="text-center text-slate-400 text-sm mt-16 mb-20 md:mb-8">
+      <footer className="text-center text-slate-400 text-base mt-16 mb-20 md:mb-8">
         <p>最后更新：2025 年 · 使用 React + TypeScript 构建</p>
       </footer>
+      </div>
     </div>
   );
 }
