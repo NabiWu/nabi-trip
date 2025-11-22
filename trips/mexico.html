@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>墨西哥行程 · CDMX / SMA / Guanajuato</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'system-ui', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', '"Noto Sans CJK SC"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+    .day-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .day-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen text-white">
+  <div class="container mx-auto px-4 py-8 max-w-5xl">
+    <!-- Back Button -->
+    <a href="../index.html" class="inline-flex items-center text-slate-300 hover:text-white mb-6 transition-colors">
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      返回主页
+    </a>
+
+    <!-- Header -->
+    <header class="mb-12 animate-fade-in">
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+        <h1 class="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+          🇲🇽 墨西哥行程
+        </h1>
+        <p class="text-xl text-slate-300 mb-4">CDMX / San Miguel de Allende / Guanajuato</p>
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="text-sm bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full">2025/11/22 – 11/29</span>
+          <span class="text-sm bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full">8 天 7 夜</span>
+          <span class="text-sm bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full">城市散步 / 巴士移动</span>
+        </div>
+        <p class="text-slate-400 text-sm">每一节只包含「交通、住宿、关键景点、餐饮建议」。点击下方日期标签可快速跳转；所有蓝色文字都是可点击的 Google Maps 链接。</p>
+      </div>
+
+      <!-- Day Navigation -->
+      <nav class="mt-6 overflow-x-auto">
+        <div class="flex gap-3 pb-3 min-w-max">
+          <a href="#d1" class="px-4 py-2 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 hover:bg-white/20 transition-all text-sm whitespace-nowrap">Day 1<span class="text-slate-400 ml-1">抵达</span></a>
+          <a href="#d2" class="px-4 py-2 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 hover:bg-white/20 transition-all text-sm whitespace-nowrap">Day 2<span class="text-slate-400 ml-1">博物馆</span></a>
+          <a href="#d3" class="px-4 py-2 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 hover:bg-white/20 transition-all text-sm whitespace-nowrap">Day 3<span class="text-slate-400 ml-1">自由日</span></a>
+          <a href="#d4" class="px-4 py-2 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 hover:bg-white/20 transition-all text-sm whitespace-nowrap">Day 4<span class="text-slate-400 ml-1">前往 SMA</span></a>
+          <a href="#d5" class="px-4 py-2 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 hover:bg-white/20 transition-all text-sm whitespace-nowrap">Day 5<span class="text-slate-400 ml-1">SMA→GTO</span></a>
+          <a href="#d6" class="px-4 py-2 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 hover:bg-white/20 transition-all text-sm whitespace-nowrap">Day 6<span class="text-slate-400 ml-1">GTO 漫步</span></a>
+          <a href="#d7" class="px-4 py-2 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 hover:bg-white/20 transition-all text-sm whitespace-nowrap">Day 7<span class="text-slate-400 ml-1">返回 CDMX</span></a>
+          <a href="#d8" class="px-4 py-2 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 hover:bg-white/20 transition-all text-sm whitespace-nowrap">Day 8<span class="text-slate-400 ml-1">返程</span></a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Days -->
+    <main class="space-y-6">
+      <!-- Day 1 -->
+      <section id="d1" class="day-card bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 animate-fade-in">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-3">
+          <h2 class="text-2xl font-bold">11/22/2025（周六） — EWR → CDMX｜入住 Roma 区</h2>
+          <div class="text-right">
+            <div class="inline-block bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full text-sm mb-2">
+              <strong>Day 1</strong> · 抵达 & 适应海拔
+            </div>
+            <div class="text-slate-400 text-sm">住：Roma · Casa Tenue</div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">✈️ 交通</div>
+            <div class="text-slate-300 text-sm">航班（EWR→MEX）：06:39 — 11:20 AM · 出发地：<a href="https://www.google.com/maps/search/?api=1&query=Newark%20Liberty%20International%20Airport%20%28EWR%29%2C%20Newark%2C%20USA" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Newark Liberty International Airport (EWR)</a> · 到达地：<a href="https://www.google.com/maps/search/?api=1&query=Mexico%20City%20International%20Airport%20%28MEX%29%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Mexico City International Airport (MEX)</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🏨 住宿</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Casa%20Tenue%2C%20Durango%2075%2C%20Roma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Casa Tenue — Durango 75, Roma, Mexico City 06700</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">📍 关键景点</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Paseo%20de%20la%20Reforma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Paseo de la Reforma</a>；<a href="https://www.google.com/maps/search/?api=1&query=Alameda%20Central%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Alameda Central</a>；<a href="https://www.google.com/maps/search/?api=1&query=Palacio%20de%20Bellas%20Artes%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Palacio de Bellas Artes</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🍽️ 餐饮建议</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Panader%C3%ADa%20Rosetta%2C%20Roma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Panadería Rosetta</a>；<a href="https://www.google.com/maps/search/?api=1&query=Handshake%20Speakeasy%2C%20Condesa%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Handshake Speakeasy</a>；<a href="https://www.google.com/maps/search/?api=1&query=Licorer%C3%ADa%20Limantour%2C%20Roma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Licorería Limantour</a></div>
+          </div>
+          <div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-amber-200 text-sm">
+            💡 备注：Casa Tenue 入住 15:00；11/25 退房。第一天注意补水、不要安排太晚的活动。
+          </div>
+        </div>
+      </section>
+
+      <!-- Day 2 -->
+      <section id="d2" class="day-card bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 animate-fade-in">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-3">
+          <h2 class="text-2xl font-bold">11/23/2025（周日） — CDMX：博物馆 & 城市地标</h2>
+          <div class="text-right">
+            <div class="inline-block bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full text-sm mb-2">
+              <strong>Day 2</strong> · 国家人类学博物馆
+            </div>
+            <div class="text-slate-400 text-sm">住：Roma · Casa Tenue</div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🚶 交通</div>
+            <div class="text-slate-300 text-sm">共享单车 / 步行</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🏨 住宿</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Casa%20Tenue%2C%20Durango%2075%2C%20Roma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Casa Tenue — Durango 75, Roma, Mexico City 06700</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">📍 关键景点</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Museo%20Nacional%20de%20Antropolog%C3%ADa%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Museo Nacional de Antropología</a>；<a href="https://www.google.com/maps/search/?api=1&query=Paseo%20de%20la%20Reforma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Paseo de la Reforma</a>；<a href="https://www.google.com/maps/search/?api=1&query=Fuente%20de%20la%20Diana%20Cazadora%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Fuente de la Diana Cazadora</a>；<a href="https://www.google.com/maps/search/?api=1&query=El%20%C3%81ngel%20de%20la%20Independencia%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">El Ángel de la Independencia</a>；<a href="https://www.google.com/maps/search/?api=1&query=Palacio%20de%20Bellas%20Artes%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Palacio de Bellas Artes</a>；<a href="https://www.google.com/maps/search/?api=1&query=Plaza%20de%20la%20Constituci%C3%B3n%20%28Z%C3%B3calo%29%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Zócalo (Plaza de la Constitución)</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🍽️ 餐饮建议</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Panader%C3%ADa%20Rosetta%2C%20Roma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Panadería Rosetta</a>；<a href="https://www.google.com/maps/search/?api=1&query=Handshake%20Speakeasy%2C%20Condesa%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Handshake Speakeasy</a>；<a href="https://www.google.com/maps/search/?api=1&query=Licorer%C3%ADa%20Limantour%2C%20Roma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Licorería Limantour</a></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Day 3 -->
+      <section id="d3" class="day-card bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 animate-fade-in">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-3">
+          <h2 class="text-2xl font-bold">11/24/2025（周一） — CDMX：自由 / 机动日</h2>
+          <div class="text-right">
+            <div class="inline-block bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full text-sm mb-2">
+              <strong>Day 3</strong> · Roma / Condesa 慢生活
+            </div>
+            <div class="text-slate-400 text-sm">住：Roma · Casa Tenue</div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🚇 交通</div>
+            <div class="text-slate-300 text-sm">地铁 / 网约车</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🏨 住宿</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Casa%20Tenue%2C%20Durango%2075%2C%20Roma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Casa Tenue — Durango 75, Roma, Mexico City 06700</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">📍 关键景点</div>
+            <div class="text-slate-300 text-sm">咖啡馆、公园、Roma / Condesa 街区</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🍽️ 餐饮建议</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Panader%C3%ADa%20Rosetta%2C%20Roma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Panadería Rosetta</a>；<a href="https://www.google.com/maps/search/?api=1&query=Handshake%20Speakeasy%2C%20Condesa%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Handshake Speakeasy</a>；<a href="https://www.google.com/maps/search/?api=1&query=Licorer%C3%ADa%20Limantour%2C%20Roma%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Licorería Limantour</a></div>
+          </div>
+          <div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-amber-200 text-sm">
+            💡 备注：留白机动日，可按临时预约、当天状态调整；也可以安排 Xochimilco、Coyoacán 等一日行程。
+          </div>
+        </div>
+      </section>
+
+      <!-- Day 4 -->
+      <section id="d4" class="day-card bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 animate-fade-in">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-3">
+          <h2 class="text-2xl font-bold">11/25/2025（周二） — CDMX → San Miguel de Allende｜落日 & Rooftop</h2>
+          <div class="text-right">
+            <div class="inline-block bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full text-sm mb-2">
+              <strong>Day 4</strong> · 前往 San Miguel
+            </div>
+            <div class="text-slate-400 text-sm">住：SMA · NUMU Hotel</div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🚌 交通</div>
+            <div class="text-slate-300 text-sm">豪华大巴：09:30–13:00（以车票为准） · 出发：<a href="https://www.google.com/maps/search/?api=1&query=Terminal%20de%20Autobuses%20del%20Norte%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Terminal de Autobuses del Norte, CDMX</a> · 抵达：<a href="https://www.google.com/maps/search/?api=1&query=Central%20de%20Autobuses%2C%20San%20Miguel%20de%20Allende%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Central de Autobuses de San Miguel de Allende</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🏨 住宿</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=NUMU%20Boutique%20Hotel%2C%20Nemesio%20Diez%2020%2C%20San%20Miguel%20de%20Allende%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">NUMU Boutique Hotel — Nemesio Diez 20, Centro, San Miguel de Allende 37700</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">📍 关键景点</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=El%20Mirador%2C%20San%20Miguel%20de%20Allende%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">El Mirador</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🍽️ 餐饮建议</div>
+            <div class="text-slate-300 text-sm">Rooftop 餐厅（19:00 预约，有 no-show 费用）</div>
+          </div>
+          <div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-amber-200 text-sm">
+            💡 备注：NUMU 入住 11/25；11/26 退房。下午可在老城随意散步，预留时间回酒店换装上 Rooftop。
+          </div>
+        </div>
+      </section>
+
+      <!-- Day 5 -->
+      <section id="d5" class="day-card bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 animate-fade-in">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-3">
+          <h2 class="text-2xl font-bold">11/26/2025（周三） — San Miguel de Allende → Guanajuato（傍晚抵达）</h2>
+          <div class="text-right">
+            <div class="inline-block bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full text-sm mb-2">
+              <strong>Day 5</strong> · SMA 上午慢行
+            </div>
+            <div class="text-slate-400 text-sm">住：Guanajuato · Peñitas 7</div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🚌 交通</div>
+            <div class="text-slate-300 text-sm">豪华大巴：18:30–20:00（以车票为准） · 出发：<a href="https://www.google.com/maps/search/?api=1&query=Central%20de%20Autobuses%2C%20San%20Miguel%20de%20Allende%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Central de Autobuses de San Miguel de Allende</a> · 抵达：<a href="https://www.google.com/maps/search/?api=1&query=Central%20de%20Autobuses%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Central de Autobuses de Guanajuato</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🏨 住宿</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Pe%C3%B1itas%207%2C%20Zona%20Centro%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Peñitas 7, Zona Centro, Guanajuato 36000</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">📍 关键景点</div>
+            <div class="text-slate-300 text-sm">SMA 老城（白天闲逛）</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🍽️ 餐饮建议</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Los%20Campos%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Los Campos</a>；<a href="https://www.google.com/maps/search/?api=1&query=La%20Clave%20Azul%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">La Clave Azul</a>；<a href="https://www.google.com/maps/search/?api=1&query=Santo%20Caf%C3%A9%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Santo Café</a></div>
+          </div>
+          <div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-amber-200 text-sm">
+            💡 备注：Airbnb（Peñitas 7）入住 11/26；11/28 退房。到 Guanajuato 后注意行李拖拽路线，有坡和台阶。
+          </div>
+        </div>
+      </section>
+
+      <!-- Day 6 -->
+      <section id="d6" class="day-card bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 animate-fade-in">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-3">
+          <h2 class="text-2xl font-bold">11/27/2025（周四） — Guanajuato City Walk</h2>
+          <div class="text-right">
+            <div class="inline-block bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full text-sm mb-2">
+              <strong>Day 6</strong> · 彩色山城一日漫步
+            </div>
+            <div class="text-slate-400 text-sm">住：Guanajuato · Peñitas 7</div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🚶 交通</div>
+            <div class="text-slate-300 text-sm">步行 / 网约车</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🏨 住宿</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Pe%C3%B1itas%207%2C%20Zona%20Centro%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Peñitas 7, Zona Centro, Guanajuato 36000</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">📍 关键景点</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Bas%C3%ADlica%20Colegiata%20de%20Nuestra%20Se%C3%B1ora%20de%20Guanajuato%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Basílica Colegiata de Nuestra Señora de Guanajuato</a>；<a href="https://www.google.com/maps/search/?api=1&query=Teatro%20Ju%C3%A1rez%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Teatro Juárez</a>；<a href="https://www.google.com/maps/search/?api=1&query=Museo%20Casa%20Diego%20Rivera%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Museo Casa Diego Rivera</a>；<a href="https://www.google.com/maps/search/?api=1&query=Callej%C3%B3n%20del%20Beso%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Callejón del Beso</a>；<a href="https://www.google.com/maps/search/?api=1&query=Monumento%20al%20P%C3%ADpila%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Monumento al Pípila</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🍽️ 餐饮建议</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Tal%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Café Tal</a>；<a href="https://www.google.com/maps/search/?api=1&query=Casa%20Valadez%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Casa Valadez</a>；<a href="https://www.google.com/maps/search/?api=1&query=Los%20Campos%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Los Campos</a>；<a href="https://www.google.com/maps/search/?api=1&query=Santo%20Caf%C3%A9%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Santo Café</a>；<a href="https://www.google.com/maps/search/?api=1&query=La%20Clave%20Azul%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">La Clave Azul</a></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Day 7 -->
+      <section id="d7" class="day-card bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 animate-fade-in">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-3">
+          <h2 class="text-2xl font-bold">11/28/2025（周五） — Guanajuato → CDMX</h2>
+          <div class="text-right">
+            <div class="inline-block bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full text-sm mb-2">
+              <strong>Day 7</strong> · 返回 CDMX
+            </div>
+            <div class="text-slate-400 text-sm">住：CDMX · Polanco Airbnb</div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🚌 交通</div>
+            <div class="text-slate-300 text-sm">豪华大巴：08:30–14:00（约 5.5 小时） · 出发：<a href="https://www.google.com/maps/search/?api=1&query=Central%20de%20Autobuses%2C%20Guanajuato%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Central de Autobuses de Guanajuato</a> · 抵达：<a href="https://www.google.com/maps/search/?api=1&query=Terminal%20de%20Autobuses%20del%20Norte%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Terminal de Autobuses del Norte, CDMX</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🏨 住宿</div>
+            <div class="text-slate-300 text-sm"><a href="https://www.google.com/maps/search/?api=1&query=Tem%C3%ADstocles%2033%2C%20Polanco%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Airbnb Polanco (CDMX)</a></div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">📍 关键景点</div>
+            <div class="text-slate-300 text-sm">按返程时间与体力安排（可省略）</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">🍽️ 餐饮建议</div>
+            <div class="text-slate-300 text-sm">自由安排</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Day 8 -->
+      <section id="d8" class="day-card bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 animate-fade-in">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-3">
+          <h2 class="text-2xl font-bold">11/29/2025（周六） — CDMX → EWR</h2>
+          <div class="text-right">
+            <div class="inline-block bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full text-sm mb-2">
+              <strong>Day 8</strong> · 返程
+            </div>
+            <div class="text-slate-400 text-sm">无住宿</div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-white/5 rounded-lg p-4">
+            <div class="text-sm font-semibold text-purple-300 mb-2">✈️ 交通</div>
+            <div class="text-slate-300 text-sm">航班（MEX→EWR）：11:30（以机票为准） · 机场：<a href="https://www.google.com/maps/search/?api=1&query=Mexico%20City%20International%20Airport%20%28MEX%29%2C%20Mexico%20City%2C%20Mexico" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Mexico City International Airport (MEX)</a></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-slate-400 text-sm mt-12 mb-8">
+      <p>最后更新：2025 年 · 可以把此页面加入手机主屏幕，作为本次旅行的「行程小册子」使用。</p>
+    </footer>
+  </div>
+</body>
+</html>
+

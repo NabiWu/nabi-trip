@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nabi's Travel Plans</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'system-ui', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', '"Noto Sans CJK SC"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen text-white">
+  <div class="container mx-auto px-4 py-12 max-w-6xl">
+    <!-- Header -->
+    <header class="text-center mb-16 animate-fade-in">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+        ✈️ Nabi's Travel Plans
+      </h1>
+      <p class="text-slate-300 text-lg md:text-xl">
+        我的个人旅行计划集合 · 点击卡片查看详细行程
+      </p>
+    </header>
+
+    <!-- Trips Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      <!-- Mexico Trip Card -->
+      <a href="trips/mexico.html" class="group">
+        <div class="card-hover bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 h-full flex flex-col">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-4xl">🇲🇽</span>
+            <span class="text-xs text-slate-400 bg-slate-800/50 px-3 py-1 rounded-full">2025/11</span>
+          </div>
+          <h2 class="text-2xl font-bold mb-2 group-hover:text-purple-300 transition-colors">
+            墨西哥之旅
+          </h2>
+          <p class="text-slate-300 text-sm mb-4 flex-grow">
+            CDMX / San Miguel de Allende / Guanajuato<br>
+            8 天 7 夜 · 城市散步 / 巴士移动
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">城市漫步</span>
+            <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">文化探索</span>
+            <span class="text-xs bg-pink-500/20 text-pink-300 px-2 py-1 rounded">美食之旅</span>
+          </div>
+          <div class="flex items-center text-sm text-slate-400 group-hover:text-purple-300 transition-colors">
+            <span>查看详情</span>
+            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Placeholder for future trips -->
+      <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10 border-dashed h-full flex flex-col items-center justify-center min-h-[200px]">
+        <div class="text-4xl mb-4 opacity-50">➕</div>
+        <p class="text-slate-400 text-sm text-center">更多旅行计划<br>即将到来</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-slate-400 text-sm mt-16">
+      <p>最后更新：2025 年 · 使用 Tailwind CSS 构建</p>
+    </footer>
+  </div>
+</body>
+</html>
+
