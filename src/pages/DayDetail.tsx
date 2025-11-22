@@ -1,8 +1,9 @@
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getTripById } from '../data/trips';
-import { formatDateDisplay, getDayByNumber } from '../utils/dateUtils';
+import { formatDateDisplay, getDayByNumber, getTripStatus } from '../utils/dateUtils';
 import { LocationMap, MultiLocationMap } from '../components/LocationMap';
+import { useSwipe } from '../hooks/useSwipe';
 import type { Location } from '../types';
 
 function renderLocation(item: string | Location) {
@@ -95,43 +96,61 @@ export function DayDetail() {
   const prevDayValid = prevDay >= 1 && prevDay <= trip.days.length;
   const nextDayValid = nextDay >= 1 && nextDay <= trip.days.length;
 
+  // Get trip status to check if we can show "Back to Today" button
+  const tripStatus = getTripStatus(trip);
+  const isToday = tripStatus.status === 'active' && tripStatus.currentDay === dayNum;
+
+  // Swipe navigation for mobile
+  const navigate = useNavigate();
+  const swipeHandlers = useSwipe({
+    onSwipeLeft: () => {
+      if (nextDayValid) {
+        navigate(`/trips/${tripId}/day/${nextDay}`);
+      }
+    },
+    onSwipeRight: () => {
+      if (prevDayValid) {
+        navigate(`/trips/${tripId}/day/${prevDay}`);
+      }
+    },
+    threshold: 80, // Minimum swipe distance
+    velocity: 0.2, // Minimum swipe velocity
+  });
+
   return (
-    <div className="container mx-auto px-4 py-6 md:py-8 max-w-4xl safe-area-top safe-area-bottom">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+    <div 
+      className="container mx-auto px-4 py-6 md:py-8 max-w-4xl safe-area-top safe-area-bottom touch-pan-y"
+      {...swipeHandlers}
+    >
+      <div className="mb-6 md:mb-8">
         <Link 
           to={`/trips/${tripId}`} 
-          className="inline-flex items-center text-slate-400 hover:text-white transition-colors text-sm font-medium"
+          className="inline-flex items-center text-slate-400 hover:text-white active:text-slate-200 transition-colors text-sm font-medium min-h-[44px]"
         >
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
           </svg>
           返回总览
         </Link>
-        <div className="flex items-center gap-4">
-          {prevDayValid && (
-            <Link 
-              to={`/trips/${tripId}/day/${prevDay}`} 
-              className="text-sm text-slate-400 hover:text-white transition-colors font-medium flex items-center gap-2"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-              </svg>
-              Day {prevDay}
-            </Link>
-          )}
-          {nextDayValid && (
-            <Link 
-              to={`/trips/${tripId}/day/${nextDay}`} 
-              className="text-sm text-slate-400 hover:text-white transition-colors font-medium flex items-center gap-2"
-            >
-              Day {nextDay}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-            </Link>
-          )}
-        </div>
       </div>
+      
+      {/* Swipe hint for mobile */}
+      <div className="md:hidden mb-4 text-center">
+        <p className="text-xs text-slate-500">左右滑动切换日期</p>
+      </div>
+
+      {/* Back to Today Button - Only show if not on today */}
+      {tripStatus.status === 'active' && tripStatus.currentDay && !isToday && (
+        <div className="mb-6 animate-fade-in">
+          <Link
+            to={`/trips/${tripId}/day/${tripStatus.currentDay}`}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-300 rounded-xl border border-green-500/30 transition-all text-sm font-medium"
+          >
+            <span>🎉</span>
+            <span>回到今天 (Day {tripStatus.currentDay})</span>
+          </Link>
+        </div>
+      )}
 
       <div className="bg-black/70 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/[0.2] transition-all duration-500 hover:border-white/[0.3]">
         {/* Header */}
@@ -145,14 +164,40 @@ export function DayDetail() {
         </div>
 
         {/* Content */}
-        <div className="p-6 md:p-8">
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light mb-3 text-white tracking-tight">
-              {formatDateDisplay(day.date)}
-            </h1>
-            <h2 className="text-lg md:text-xl text-slate-200 leading-relaxed mb-6">
-              {day.title}
-            </h2>
+        <div className="p-4 md:p-6 lg:p-8">
+          <div className="mb-6 md:mb-8">
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <div className="flex-1">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-light mb-2 md:mb-3 text-white tracking-tight">
+                  {formatDateDisplay(day.date)}
+                </h1>
+                <h2 className="text-base md:text-lg lg:text-xl text-slate-200 leading-relaxed">
+                  {day.title}
+                </h2>
+              </div>
+              {/* Share button for mobile */}
+              <button
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: `${day.title} - ${formatDateDisplay(day.date)}`,
+                      text: `查看 ${trip.name} 的行程：${day.title}`,
+                      url: window.location.href,
+                    }).catch(() => {});
+                  } else {
+                    // Fallback: copy to clipboard
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('链接已复制到剪贴板');
+                  }
+                }}
+                className="md:hidden p-2 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
+                title="分享"
+              >
+                <svg className="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                </svg>
+              </button>
+            </div>
             
             {/* Accommodation */}
             {day.accommodation && (
@@ -168,12 +213,12 @@ export function DayDetail() {
 
           <div className="space-y-4">
             {/* Transportation */}
-            <div className="bg-black/60 rounded-2xl p-5 md:p-6 border border-white/[0.2]">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">{day.transport.type.split(' ')[0]}</span>
-                <h3 className="text-sm font-semibold text-white uppercase tracking-wider">交通</h3>
+            <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
+              <div className="flex items-center gap-3 mb-3 md:mb-4">
+                <span className="text-xl md:text-2xl">{day.transport.type.split(' ')[0]}</span>
+                <h3 className="text-xs md:text-sm font-semibold text-white uppercase tracking-wider">交通</h3>
               </div>
-              <div className="text-slate-200 text-sm leading-relaxed space-y-2">
+              <div className="text-slate-200 text-xs md:text-sm leading-relaxed space-y-2">
                 {day.transport.details && <p>{day.transport.details}</p>}
                 {day.transport.departure && (
                   <p className="flex items-start gap-2">
@@ -195,10 +240,10 @@ export function DayDetail() {
 
             {/* Accommodation with link */}
             {day.accommodationLink && (
-              <div className="bg-black/60 rounded-2xl p-5 md:p-6 border border-white/[0.2]">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl">🏨</span>
-                  <h3 className="text-sm font-semibold text-white uppercase tracking-wider">住宿</h3>
+              <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
+                <div className="flex items-center gap-3 mb-3 md:mb-4">
+                  <span className="text-xl md:text-2xl">🏨</span>
+                  <h3 className="text-xs md:text-sm font-semibold text-white uppercase tracking-wider">住宿</h3>
                 </div>
                 <div className="text-slate-200 text-sm mb-4">
                   <a
@@ -219,12 +264,12 @@ export function DayDetail() {
 
             {/* Attractions */}
             {day.attractions.length > 0 && (
-              <div className="bg-black/60 rounded-2xl p-5 md:p-6 border border-white/[0.2]">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl">📍</span>
-                  <h3 className="text-sm font-semibold text-white uppercase tracking-wider">关键景点</h3>
+              <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
+                <div className="flex items-center gap-3 mb-3 md:mb-4">
+                  <span className="text-xl md:text-2xl">📍</span>
+                  <h3 className="text-xs md:text-sm font-semibold text-white uppercase tracking-wider">关键景点</h3>
                 </div>
-                <div className="text-slate-200 text-sm mb-4 leading-relaxed">
+                <div className="text-slate-200 text-xs md:text-sm mb-3 md:mb-4 leading-relaxed">
                   {day.attractions.map((item, idx) => (
                     <span key={idx}>
                       {renderLocation(item)}
@@ -238,12 +283,12 @@ export function DayDetail() {
 
             {/* Dining */}
             {day.dining.length > 0 && (
-              <div className="bg-black/60 rounded-2xl p-5 md:p-6 border border-white/[0.2]">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl">🍽️</span>
-                  <h3 className="text-sm font-semibold text-white uppercase tracking-wider">餐饮建议</h3>
+              <div className="bg-black/60 rounded-2xl p-4 md:p-5 lg:p-6 border border-white/[0.2]">
+                <div className="flex items-center gap-3 mb-3 md:mb-4">
+                  <span className="text-xl md:text-2xl">🍽️</span>
+                  <h3 className="text-xs md:text-sm font-semibold text-white uppercase tracking-wider">餐饮建议</h3>
                 </div>
-                <div className="text-slate-200 text-sm mb-4 leading-relaxed">
+                <div className="text-slate-200 text-xs md:text-sm mb-3 md:mb-4 leading-relaxed">
                   {day.dining.map((item, idx) => (
                     <span key={idx}>
                       {renderLocation(item)}
@@ -257,12 +302,12 @@ export function DayDetail() {
 
             {/* Note */}
             {day.note && (
-              <div className="bg-black/60 border border-white/[0.2] rounded-2xl p-4 md:p-5">
-                <div className="flex items-start gap-3">
-                  <span className="text-xl">💡</span>
+              <div className="bg-black/60 border border-white/[0.2] rounded-2xl p-3 md:p-4 lg:p-5">
+                <div className="flex items-start gap-2 md:gap-3">
+                  <span className="text-lg md:text-xl">💡</span>
                   <div className="flex-1">
                     <div className="text-xs text-slate-200 mb-1 uppercase tracking-wider">备注</div>
-                    <p className="text-white text-sm leading-relaxed">{day.note}</p>
+                    <p className="text-white text-xs md:text-sm leading-relaxed">{day.note}</p>
                   </div>
                 </div>
               </div>
@@ -271,7 +316,7 @@ export function DayDetail() {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-8">
+      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-6 md:mt-8 mb-20 md:mb-8">
         {prevDayValid && (
           <Link
             to={`/trips/${tripId}/day/${prevDay}`}

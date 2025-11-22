@@ -4,11 +4,22 @@ import { Home } from './pages/Home';
 import { TripOverview } from './pages/TripOverview';
 import { DayDetail } from './pages/DayDetail';
 import { TripStatus } from './pages/TripStatus';
+import { NavigationBar } from './components/NavigationBar';
+import { BottomNavigation } from './components/BottomNavigation';
 import { getBackgroundForRoute } from './utils/backgroundImages';
 import './App.css';
 
 function AppRoutes() {
   const location = useLocation();
+  
+  useEffect(() => {
+    // Add page transition class
+    document.body.classList.add('page-transition');
+    const timer = setTimeout(() => {
+      document.body.classList.remove('page-transition');
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
   
   return (
     <Routes>
@@ -34,11 +45,11 @@ function DynamicBackground() {
     const pathMatch = location.pathname.match(/\/day\/(\d+)/);
     const dayNumber = pathMatch ? parseInt(pathMatch[1], 10) : undefined;
     
-    // Get appropriate background image for current route
-    const bgImage = getBackgroundForRoute(location.pathname, dayNumber);
+    // Get appropriate background gradient for current route
+    const bgGradient = getBackgroundForRoute(location.pathname, dayNumber);
     
     appElement.setAttribute('data-bg-image', 'true');
-    appElement.style.setProperty('--bg-image', `url('${bgImage}')`);
+    appElement.style.setProperty('--bg-image', bgGradient);
   }, [location.pathname]);
   
   return null;
@@ -59,7 +70,9 @@ function App() {
         <div className="floating-orb orb-3"></div>
         
         <div className="relative z-10">
+          <NavigationBar />
           <AppRoutes />
+          <BottomNavigation />
         </div>
       </div>
     </BrowserRouter>
